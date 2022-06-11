@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/couicos/backpacks/simple_backpack_texture"
+	"$surfaceprop" "Default"
+	"$surfaceprop2" "Default"
+	"$translucent" 1
+}
