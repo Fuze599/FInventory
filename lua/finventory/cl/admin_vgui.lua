@@ -2,7 +2,7 @@
 if CLIENT then
 
     local function showAdminVgui( configTable, selector ) 
-        // Invisible background to quit inventory
+
         local backgroundFrame = vgui.Create( 'DButton' )
         backgroundFrame:SetSize( ScrW(), ScrH() )
         backgroundFrame:SetCursor( "arrow" )

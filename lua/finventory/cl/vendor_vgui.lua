@@ -140,7 +140,7 @@ function showVendorDerma(ply)
             price:SetText("Price :" .. v.price .. "$")
         end
 
-        if ply.finventoryUniqueName != k then
+        if ply.finventoryUniqueName ~= k then
             local buyButton = vgui.Create("DButton", buttonBackgroundItem)
             buyButton:SetText("")
             buyButton:SetPos(ScrW() * 200 / 1920, ScrH() * 125 / 1080)

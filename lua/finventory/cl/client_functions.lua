@@ -70,12 +70,11 @@ function ply:showCheckerLoadBar(otherPly, isInspector)
     end
     
     hook.Add("HUDPaint", "LoadBarHUD", function() end)
-
     timer.Create("FInventoryCheckerProgressBar", 1 / interval, finventoryConfig.timeToCheckInventory * interval, function()
         local repsLeft = timer.RepsLeft("FInventoryCheckerProgressBar")
-        if repsLeft != 0 then
-            if (isInspector and self:GetEyeTrace().Entity != otherPly) 
-                or (not isInspector and otherPly:GetEyeTrace().Entity != self)
+        if repsLeft > 0 then
+            if (isInspector and self:GetEyeTrace().Entity ~= otherPly) 
+                or (not isInspector and otherPly:GetEyeTrace().Entity ~= self)
                 or (self:GetPos():Distance(otherPly:GetPos()) > finventoryConfig.distanceChecker) then
 
                 hook.Add("HUDPaint", "LoadBarHUD", function() end)

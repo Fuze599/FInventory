@@ -117,8 +117,6 @@ finventoryConfig.bankPlace = 18
 finventoryConfig.removeIllegalItemPay = 50
 -- // Time available for a police control (0 for unlimited but not recommended)
 finventoryConfig.timePoliceControl = 5
--- // The distance required for a police control
-finventoryConfig.distanceChecker = 130
 
 finventoryConfig.timeToCheckInventory = 2
 
@@ -130,6 +128,11 @@ finventoryConfig.maxBackpackPurchase = 10
 
 finventoryConfig.maxInventorySize = 4095
 
+-- // The distance required for a police control
+finventoryConfig.distanceChecker = 130
+finventoryConfig.distance3D2D = 250
+finventoryConfig.distancePickupItems = 130
+ 
 finventoryConfig.maxUIntByte = math.ceil(math.log(finventoryConfig.maxInventorySize + 1, 2))
 
 // The list of entities that can be taken 

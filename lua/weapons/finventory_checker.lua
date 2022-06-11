@@ -53,12 +53,12 @@ function SWEP:PrimaryAttack()
             timer.Create("removeInventoryCheckerPanel", 1 / interval, finventoryConfig.timeToCheckInventory * interval, function()
                 local repsLeft = timer.RepsLeft("removeInventoryCheckerPanel")
  
-                if self:GetOwner():GetEyeTrace().Entity != inspectedPlayer or not inspectedPlayer:IsPlayer()
+                if self:GetOwner():GetEyeTrace().Entity ~= inspectedPlayer or not inspectedPlayer:IsPlayer()
                     or self:GetOwner():GetPos():Distance(eyeTrace.HitPos) > finventoryConfig.distanceChecker then 
                     timer.Remove("removeInventoryCheckerPanel") 
                     return
                 end 
-                
+
                 if repsLeft <= 0 then
                     if self:GetOwner():changeInspectionMode(inspectedPlayer, true) then
                         inspectedPlayer:closeAllDermas()

@@ -1,7 +1,7 @@
 if not CLIENT then return end
 
 function showInventoryDerma(inventory, inspectedPlayer)
-    local checkMod = (inspectedPlayer and inspectedPlayer != LocalPlayer() 
+    local checkMod = (inspectedPlayer and inspectedPlayer ~= LocalPlayer() 
                         and inspectedPlayer:IsPlayer() and LocalPlayer():isCP())
 
     if not inspectedPlayer or not inspectedPlayer:IsPlayer() then inspectedPlayer = LocalPlayer() end                

@@ -348,7 +348,7 @@ function ply:deleteIllegalItems(suspect)
         return false
     end
     if finventoryConfig.isGamemodeDarkRP and not self:isCP() then 
-        self:sendNotification("You're not a policeman!")
+        self:sendNotification("You're not allowed to do this!")
         return false
     end
 

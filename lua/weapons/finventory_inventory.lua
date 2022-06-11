@@ -44,7 +44,7 @@ function SWEP:PrimaryAttack()
     local eyeTrace = self:GetOwner():GetEyeTrace()
     local entity = eyeTrace.Entity
 
-    if self:GetOwner():GetPos():Distance(eyeTrace.HitPos) > 130 then return end
+    if self:GetOwner():GetPos():Distance(eyeTrace.HitPos) > finventoryConfig.distancePickupItems then return end
 
     self:GetOwner():pickupItem(entity) 
 end 
