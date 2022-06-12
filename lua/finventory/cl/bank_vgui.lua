@@ -110,9 +110,7 @@ function showBankDerma(inventory, bank)
                     isOccuped = true
 
                     if actualInventory[j].itemType == getItemShipmentString() then
-                        local class = CustomShipments[actualInventory[j].content].entity
-                        local metaTableWeapon = weapons.Get(class)
-                        nameItem = metaTableWeapon.PrintName .. " (ship.)"
+                        nameItem = actualInventory[j].name .. " (ship.)"
                         modelItem = CustomShipments[actualInventory[j].content].model
                     elseif actualInventory[j].itemType == getItemAmmoString() then
                         local ammoName = game.GetAmmoName(game.GetAmmoID(actualInventory[j].content))

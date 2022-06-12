@@ -183,9 +183,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
                 isOccuped = true
 
                 if inventory.content[i].itemType == getItemShipmentString() then
-                    local class = CustomShipments[inventory.content[i].content].entity
-                    local metaTableWeapon = weapons.Get(class)
-                    text = metaTableWeapon.PrintName .. " (ship.)"
+                    text = inventory.content[i].name .. " (ship.)"
                     modelItem = CustomShipments[inventory.content[i].content].model
                 elseif inventory.content[i].itemType == getItemAmmoString() then
                     local ammoName = game.GetAmmoName(game.GetAmmoID(inventory.content[i].content))

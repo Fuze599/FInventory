@@ -105,14 +105,19 @@ function createItem(itemEntity)
         itemType = getItemWeaponString()
         count = itemEntity:Getamount()
         class = itemEntity:GetWeaponClass() 
-        local metaTableWeapon = weapons.Get(class)
-        if metaTableWeapon and metaTableWeapon.PrintName then 
-            name = metaTableWeapon.PrintName 
-        end
+        
+        local weaponName = getWeaponName(class)
+        if weaponName then  name = weaponName end
+
     elseif class == finventoryConfig.spawnedShipmentClass then
         itemType = getItemShipmentString()
         count = itemEntity:Getcount()
         content = itemEntity:Getcontents()
+
+        local weaponClass = CustomShipments[content].entity
+        local weaponName = getWeaponName(weaponClass)
+        if weaponName then name = weaponName end
+
     elseif class == finventoryConfig.spawnedAmmoClass then
         itemType = getItemAmmoString()
         count = itemEntity.amountGiven
@@ -123,6 +128,13 @@ function createItem(itemEntity)
     end
 
     return Item(itemType, class, model, name, count, content)
+end
+
+function getWeaponName(class) 
+    local metaTableWeapon = weapons.Get(class)
+    if metaTableWeapon and metaTableWeapon.PrintName then 
+        return metaTableWeapon.PrintName 
+    end
 end
 
 function ply:dropItem(index) 
