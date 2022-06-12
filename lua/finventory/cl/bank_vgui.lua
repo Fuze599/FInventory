@@ -6,7 +6,7 @@ function showBankDerma(inventory, bank)
     backgroundCloseButton:SetCursor("arrow")
     backgroundCloseButton:SetText("")
     backgroundCloseButton.Paint = function(self,w,h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 0))
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
     end
     backgroundCloseButton.DoClick = function(self) backgroundCloseButton:Remove() end
     backgroundCloseButton.DoRightClick = function(self) backgroundCloseButton:Remove() end
@@ -27,15 +27,15 @@ function showBankDerma(inventory, bank)
     mainFrame:ShowCloseButton(false)
     mainFrame:MakePopup()
     mainFrame.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(50, 50, 50))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
     end
 
     local upperBar = vgui.Create("DPanel", mainFrame)
     upperBar:SetSize(ScrW() * 1152 / 1920, ScrH() * 40 / 1080) 
     upperBar:SetPos(0, 0)
     upperBar.Paint = function(self, w, h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(40, 40, 40))
-    end 
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.lightColor)
+    end
 
     local closeButton = vgui.Create("DButton", mainFrame)
     closeButton:SetPos(ScrW() * 1120 / 1920, ScrH() * 10 / 1080)
@@ -44,7 +44,7 @@ function showBankDerma(inventory, bank)
     closeButton:SetText("")
     closeButton:SetCursor("hand")
     closeButton.Paint = function(self,w,h)
-        draw.RoundedBox(100, 0, 0, w, h, Color(201, 10, 10))
+        draw.RoundedBox(100, 0, 0, w, h, finventoryConfig.Theme.loadBarColor)
     end
     closeButton.DoClick = function() backgroundCloseButton:Remove() end
 
@@ -52,19 +52,19 @@ function showBankDerma(inventory, bank)
     mainTitle:SetPos(ScrW() * 15 / 1920, ScrH() * -6 / 1080)
     mainTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
     mainTitle:SetFont("FInventoryLargeFont")
-    mainTitle:SetText(finventoryConfig.Language["Bank"][finventoryConfigInGame.lang.value])
+    mainTitle:SetText("Bank")
 
     local youTitle = vgui.Create("DLabel", mainFrame)
     youTitle:SetPos(ScrW() * 75 / 1920, ScrH() * 35 / 1080)
     youTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
     youTitle:SetFont("FInventorySmallFont")
-    youTitle:SetText(finventoryConfig.Language["Inventory"][finventoryConfigInGame.lang.value])
+    youTitle:SetText("Inventory")
 
     local bankTitle = vgui.Create("DLabel", mainFrame)
     bankTitle:SetPos(ScrW() * 600 / 1920, ScrH() * 35 / 1080)
     bankTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
     bankTitle:SetFont("FInventorySmallFont")
-    bankTitle:SetText(finventoryConfig.Language["Bank"][finventoryConfigInGame.lang.value])
+    bankTitle:SetText("Bank")
 
     local bankButtons = {}
     local inventoryButtons = {}
@@ -87,10 +87,10 @@ function showBankDerma(inventory, bank)
         local sbar = scroller:GetVBar()
         sbar:SetHideButtons(true)
         sbar.Paint = function(self,w,h)
-            draw.RoundedBox(5, 0, 0, w, h, Color(20, 20, 20, 255))
+            draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.darkColor)
         end
         sbar.btnGrip.Paint = function(self,w,h)
-            draw.RoundedBox(5, 0, 0, w, h, Color(30, 30, 30, 255))
+            draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.middleColor)
         end
 
         local gridItems = vgui.Create("DGrid", scroller)
@@ -144,7 +144,7 @@ function showBankDerma(inventory, bank)
             buttonItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
             buttonItem:SetText("")
             buttonItem.Paint = function(self, w, h) 
-                draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 0))
+                draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
             end
             if isOccuped then
                 buttonItem.DoClick = function()
@@ -163,13 +163,13 @@ function showBankDerma(inventory, bank)
             buttonBackgroundItem.Paint = function(self, w, h) 
                 if isOccuped then
                     if (buttonItem:IsHovered()) then
-                        draw.RoundedBox(4, 0, 0, w, h, Color(30, 30, 30))
+                        draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.middleColor)
                     else
-                        draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+                        draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
                     end
-                    draw.SimpleText(nameItem, "FInventoryExtraSmallFont", w / 2, h / 1.2, Color(200,200,200), 1, 1)
+                    draw.SimpleText(nameItem, "FInventoryExtraSmallFont", w / 2, h / 1.2, finventoryConfig.Theme.veryMuchLightColor, 1, 1)
                 else
-                    draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+                    draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
                 end
             end
             gridItems:AddItem(listItem)
@@ -227,16 +227,16 @@ function togglePlace(bankButtons, inventoryButtons, actualSideModel, actualSideB
     otherSideBackgroundButton.text = actualSideButtonBackgroundItem.text
     otherSideBackgroundButton.Paint = function(self, w, h) 
         if (otherSideButton:IsHovered()) then
-            draw.RoundedBox(4, 0, 0, w, h, Color(30, 30, 30))
+            draw.RoundedBox(4, 0, 0, w, h, inventoryConfig.Theme.middleColor)
         else
-            draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+            draw.RoundedBox(4, 0, 0, w, h, inventoryConfig.Theme.lightColor)
         end
-        draw.SimpleText(otherSideBackgroundButton.text, "FInventoryExtraSmallFont", w / 2, h / 1.2, Color(200,200,200), 1, 1)
+        draw.SimpleText(otherSideBackgroundButton.text, "FInventoryExtraSmallFont", w / 2, h / 1.2, finventoryConfig.Theme.veryMuchLightColor, 1, 1)
     end
 
     // Remove the paint anim of the previous place
     actualSideButtonBackgroundItem.Paint = function(self, w, h) 
-        draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+        draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end
 
     // Set model and button of the revious place

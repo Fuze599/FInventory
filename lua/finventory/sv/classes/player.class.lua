@@ -147,20 +147,20 @@ function ply:spawnItem(item)
     })
 
     local spawnedItem
-    if item.itemType == "entity" then
-        spawnedItem = ents.Create(item.class)
+    if item:getItemType() == "entity" then
+        spawnedItem = ents.Create(item:getClass())
         if not IsValid(spawnedItem) then return end
-    elseif item.itemType == "weapon" then 
+    elseif item:getItemType() == "weapon" then 
         spawnedItem = ents.Create("spawned_weapon")
         if not IsValid(spawnedItem) then return end
-        spawnedItem:SetWeaponClass(item.class)
-        spawnedItem:SetModel(item.model)
-        spawnedItem:Setamount(item.count)
-    elseif item.itemType == "shipment" then
+        spawnedItem:SetWeaponClass(item:getClass())
+        spawnedItem:SetModel(item:getModel())
+        spawnedItem:Setamount(item:getCount())
+    elseif item:getItemType() == "shipment" then
         spawnedItem = ents.Create("spawned_shipment")
         if not IsValid(spawnedItem) then return end
-        spawnedItem:Setcount(item.count)
-        spawnedItem:Setcontents(item.content)
+        spawnedItem:Setcount(item:getCount())
+        spawnedItem:Setcontents(item:getContent())
     end
 
     spawnedItem:SetPos(traceLine.HitPos)
@@ -187,7 +187,12 @@ function ply:pickupBackpack(backpack)
     backpack:Remove()
     self:loadModel()
 
-    self:sendNotification("You picked up a backpack") 
+    if newInventory:getIsPocket() then
+        self:sendNotification("You picked up a box!") 
+    else
+        self:sendNotification("You picked up a backpack!") 
+    end
+    
     return true
 end 
 
@@ -204,9 +209,9 @@ function ply:dropInventory(hasNotification)
     if not IsValid(self) then return end
     local inventory = self:retrieveInventory()
 
-    if inventory.isPocket then
+    if inventory:getIsPocket() then
         if inventory:isEmpty() then return end 
-        inventory.setModelExt("models/props_junk/cardboard_box001a.mdl") 
+        inventory:setModelExt("models/props_junk/cardboard_box001a.mdl") 
     end
 
     self:spawnBackpack(inventory)
@@ -235,7 +240,6 @@ function ply:spawnBackpack(inventory)
     if not IsValid(spawnBackpack) then return end
     spawnBackpack:SetPos(traceLine.HitPos)
     spawnBackpack:SetModel(inventory:getModelExt())
-    spawnBackpack:SetAngles(Angle(0, 0, 0))
     spawnBackpack.finventoryInventory = inventory
     spawnBackpack:Spawn()
 end
@@ -249,11 +253,7 @@ function ply:transferItemFromBankToInventory(indexBank, indexInventory)
     local item = bank:remove(indexBank)
     if not item then end
 
-    local isInserted = inventory:addToIndex(item, indexInventory)
-    if not isInserted then return end
-
-    inventory:save()
-    bank:save()
+    inventory:addToIndex(item, indexInventory)
 end
 net.Receive("finventoryTransferItemFromBankToInventory", function(len, ply) 
     local indexBank = net.ReadUInt(finventoryConfig.maxUIntByte)
@@ -268,11 +268,7 @@ function ply:transferItemFromInventoryToBank(indexInventory, indexBank)
     local item = inventory:remove(indexInventory)
     if not item then return end
 
-    local isInserted = bank:addToIndex(item, indexBank)
-    if not isInserted then return end
-
-    inventory:save()
-    bank:save()
+    bank:addToIndex(item, indexBank)
 end
 net.Receive("finventoryTransferItemFromInventoryToBank", function(len, ply) 
     local indexInventory = net.ReadUInt(finventoryConfig.maxUIntByte)
@@ -288,11 +284,11 @@ end
 function ply:buyInventory(inventoryUniqueName)
     local newInventory = Inventory(self, inventoryUniqueName, {})
 
-    if not finventoryConfig.isGamemodeDarkRP or self:canAfford(newInventory.price) then
+    if not finventoryConfig.isGamemodeDarkRP or self:canAfford(newInventory:getPrice()) then
         if newInventory:addAllContentOf(self:retrieveInventory()) then 
             if finventoryConfig.isGamemodeDarkRP then
-                self:addMoney(-newInventory.price)
-                self:sendNotification("You've bought a new backpack for " .. newInventory.price .. "$!") 
+                self:addMoney(-newInventory:getPrice())
+                self:sendNotification("You've bought a new backpack for " .. newInventory:getPrice() .. "$!") 
             else
                 self:sendNotification("You bought a new backpack!")
             end

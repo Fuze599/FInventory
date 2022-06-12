@@ -89,7 +89,7 @@ end
 
 function Inventory:saveInFile()
     if not IsValid(self.owner) then return false end
-    local inventoryPath = finventoryConfig.saveFolderName .. "/finventory_" .. self.owner:SteamID64() .. ".json"
+    local inventoryPath = self:getSavePath()
     local jsonInventory = self:stringify()
     file.Write(inventoryPath, jsonInventory) 
 end
@@ -110,7 +110,7 @@ end
 function Inventory:deleteIllegalItems() 
     local removedIndexTab = {}
     for k, item in pairs(self.content) do
-        if finventoryConfig.illegalEntities[item.class] then
+        if finventoryConfig.illegalEntities[item:getClass()] then
             table.insert(removedIndexTab, k)
         end 
     end
@@ -129,6 +129,10 @@ end
 /******************
 * GETTERS/SETTERS *
 *******************/
+
+function Inventory:getSavePath()
+    return finventoryConfig.saveFolderName .. "/finventory_" .. self.owner:SteamID64() .. ".json"
+end
 
 function Inventory:getPlace() 
     return self.place

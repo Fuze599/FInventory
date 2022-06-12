@@ -83,9 +83,9 @@ function ply:showCheckerLoadBar(otherPly, isInspector)
             end
             progressIndex = repsLeft / finventoryConfig.timeToCheckInventory / interval
             hook.Add("HUDPaint", "LoadBarHUD", function() 
-                draw.RoundedBox(0, ScrW() / 2 - w / 2 - 5, ScrH() / 2 - hPos - 5, w + 10, h + 10, Color(30, 30, 30)) --> border
-                draw.RoundedBox(0, ScrW() / 2 - w / 2, ScrH() / 2 - hPos, w, h, Color(50, 50, 50)) --> background
-                draw.RoundedBox(0, ScrW() / 2 - w / 2 + 3, ScrH() / 2 - hPos + 3, w * progressIndex - 6, h - 6, Color(202, 27, 27)) --> bar
+                draw.RoundedBox(0, ScrW() / 2 - w / 2 - 5, ScrH() / 2 - hPos - 5, w + 10, h + 10, finventoryConfig.Theme.middleColor) --> border
+                draw.RoundedBox(0, ScrW() / 2 - w / 2, ScrH() / 2 - hPos, w, h, finventoryConfig.Theme.veryLightColor) --> background
+                draw.RoundedBox(0, ScrW() / 2 - w / 2 + 3, ScrH() / 2 - hPos + 3, w * progressIndex - 6, h - 6, finventoryConfig.Theme.loadBarColor) --> bar
                 draw.DrawText(text, "FInventorySmallBoldFont", ScrW() / 2 - w / 2 + 10, ScrH() / 2 - hPos + 10, color_white, TEXT_ALIGN_LEFT)
             end)
         else

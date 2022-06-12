@@ -7,7 +7,7 @@ function showVendorDerma(ply)
     backgroundCloseButton:SetCursor("arrow")
     backgroundCloseButton:SetText("")
     backgroundCloseButton.Paint = function(self,w,h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 0))
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
     end
     backgroundCloseButton.DoClick = function(self) backgroundCloseButton:Remove() end
     backgroundCloseButton.DoRightClick = function(self) backgroundCloseButton:Remove() end
@@ -27,14 +27,14 @@ function showVendorDerma(ply)
     mainFrame:ShowCloseButton(false)
     mainFrame:MakePopup()
     mainFrame.Paint = function(self, w, h)
-        draw.RoundedBox(15, 0, 0, w, h, Color(50, 50, 50, 255))
+        draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
     end
 
     local upperBar = vgui.Create("DPanel", mainFrame)
     upperBar:SetSize(ScrW() * 1440 / 1920, ScrH() * 40 / 1080) 
     upperBar:SetPos(0, 0)
     upperBar.Paint = function(self, w, h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(40, 40, 40))
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end 
 
     local closeButton = vgui.Create("DButton", mainFrame)
@@ -44,7 +44,7 @@ function showVendorDerma(ply)
     closeButton:SetText("")
     closeButton:SetCursor("hand")
     closeButton.Paint = function(self,w,h)
-        draw.RoundedBox(100, 0, 0, w, h, Color(201, 10, 10))
+        draw.RoundedBox(100, 0, 0, w, h, finventoryConfig.Theme.loadBarColor)
     end
     closeButton.DoClick = function() mainFrame:Close() end
 
@@ -73,10 +73,10 @@ function showVendorDerma(ply)
     local sbar = scroller:GetVBar()
     sbar:SetHideButtons(true)
     sbar.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(20, 20, 20, 255))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.darkColor)
     end
     sbar.btnGrip.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(30, 30, 30, 255))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.middleColor)
     end
 
     local backpackGrid = vgui.Create("DGrid", scroller)
@@ -117,7 +117,7 @@ function showVendorDerma(ply)
             self:SetLookAt((size1+size2)/2)
         end	
         buttonBackgroundItem.Paint = function(self, w, h) 
-            draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+            draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
         end
 
         local nameText = vgui.Create("DLabel", buttonBackgroundItem)
@@ -147,11 +147,11 @@ function showVendorDerma(ply)
             buyButton:SetSize(ScrW() * 150 / 1920, ScrH() * 50 / 1080)
             buyButton.Paint = function(self, w, h)
                 if self:IsHovered() then
-                    draw.RoundedBox(10, 0, 0, w, h, Color(20, 20, 20, 255))
+                    draw.RoundedBox(10, 0, 0, w, h, finventoryConfig.Theme.darkColor)
                 else
-                    draw.RoundedBox(10, 0, 0, w, h, Color(30, 30, 30, 255))
+                    draw.RoundedBox(10, 0, 0, w, h, finventoryConfig.Theme.middleColor)
                 end
-                draw.DrawText("Buy", "FInventorySmallFont", w/2, h/2 - h/5, Color(190,190,190), TEXT_ALIGN_CENTER)
+                draw.DrawText("Buy", "FInventorySmallFont", w/2, h/2 - h/5, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
             end
             buyButton.DoClick = function() 
                 mainFrame:Close() 
@@ -165,9 +165,9 @@ function showVendorDerma(ply)
             BoughtText:SetSize(ScrW() * 200 / 1920, ScrH() * 50 / 1080)
             BoughtText:SetFont("FInventorySmallFont") 
             BoughtText:SetText("") 
-            BoughtText:SetColor(Color(20, 171, 20))
+            BoughtText:SetColor(finventoryConfig.Theme.successColor)
             BoughtText.Paint = function(self, w, h)
-                draw.DrawText("Bought", "FInventorySmallFont", w/7.5, h/2 - h/5, Color(20, 171, 20), TEXT_ALIGN_CENTER)
+                draw.DrawText("Bought", "FInventorySmallFont", w/7.5, h/2 - h/5, finventoryConfig.Theme.successColor, TEXT_ALIGN_CENTER)
             end
         end
         backpackGrid:AddItem(backpackCard)

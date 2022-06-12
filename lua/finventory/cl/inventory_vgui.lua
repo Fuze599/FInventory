@@ -21,7 +21,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
     backgroundCloseButton:SetCursor("arrow")
     backgroundCloseButton:SetText("")
     backgroundCloseButton.Paint = function(self, w, h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 0))
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
     end
     backgroundCloseButton.DoClick = function() quitInventory() end
     backgroundCloseButton.DoRightClick = function() quitInventory() end
@@ -52,14 +52,14 @@ function showInventoryDerma(inventory, inspectedPlayer)
     mainFrame:ShowCloseButton(false)
     mainFrame:MakePopup()
     mainFrame.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(50, 50, 50))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
     end
 
     local upperBar = vgui.Create("DPanel", mainFrame)
     upperBar:SetSize(ScrW() * 960 / 1920, ScrH() * 40 / 1080) 
     upperBar:SetPos(0, 0)
     upperBar.Paint = function(self, w, h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(40, 40, 40))
+        draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end 
 
     local closeButton = vgui.Create("DButton", mainFrame)
@@ -68,7 +68,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
     closeButton:SetFont("FInventorySmallFont")
     closeButton:SetText("")
     closeButton.Paint = function(self,w,h)
-        draw.RoundedBox(100, 0, 0, w, h, Color(201, 10, 10))
+        draw.RoundedBox(100, 0, 0, w, h, finventoryConfig.Theme.loadBarColor)
     end
     closeButton.DoClick = function() quitInventory() end
 
@@ -89,8 +89,8 @@ function showInventoryDerma(inventory, inspectedPlayer)
         dProgressTimeLeft:SetSize(ScrW() * 965 / 1920, ScrH() * 10 / 1080)
         dProgressTimeLeft:SetPos(0, ScrH() * 565 / 1080)
         dProgressTimeLeft.Paint = function(self, w, h)
-            draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
-            draw.RoundedBoxEx(0, 0, 0, w * progressIndex, h, Color(250, 50, 50))
+            draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
+            draw.RoundedBoxEx(0, 0, 0, w * progressIndex, h, finventoryConfig.Theme.loadBarColor)
         end 
 
         local interval = finventoryConfig.loadingBarInterval
@@ -144,11 +144,11 @@ function showInventoryDerma(inventory, inspectedPlayer)
         end
         dropBackpackButton.Paint = function(self, w, h)
             if self:IsHovered() then
-                draw.RoundedBox(15, 0, 0, w, h, Color(35, 35, 35, 255))
+                draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.middleDarkColor)
             else
-                draw.RoundedBox(15, 0, 0, w, h, Color(40, 40, 40, 255))
+                draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.lightColor)
             end
-            draw.DrawText(buttonName, "FInventorySmallFont", ScrW() * 114 / 1920, ScrH() * 15 / 1080, Color(190,190,190), TEXT_ALIGN_CENTER)
+            draw.DrawText(buttonName, "FInventorySmallFont", ScrW() * 114 / 1920, ScrH() * 15 / 1080, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
         end
     end
 
@@ -158,10 +158,10 @@ function showInventoryDerma(inventory, inspectedPlayer)
     local sbar = scroller:GetVBar()
     sbar:SetHideButtons(true)
     sbar.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(20, 20, 20, 255))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.darkColor)
     end
     sbar.btnGrip.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, Color(30, 30, 30, 255))
+        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.middleColor)
     end
 
     local itemsGrid = vgui.Create("DGrid", scroller)
@@ -216,7 +216,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
         buttonItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
         buttonItem:SetText("")
         buttonItem.Paint = function(self, w, h) 
-            draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 0))
+            draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
         end
         if isOccuped and not checkMod then
             buttonItem.DoClick = function()
@@ -281,13 +281,13 @@ function showInventoryDerma(inventory, inspectedPlayer)
         buttonBackgroundItem.Paint = function(self, w, h) 
             if isOccuped then
                 if buttonItem:IsHovered() and not checkMod then
-                    draw.RoundedBox(4, 0, 0, w, h, Color(30, 30, 30))
+                    draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.middleColor)
                 else
-                    draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+                    draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
                 end
-                draw.SimpleText(text, "FInventoryExtraSmallFont", w / 2, h / 1.2, Color(200,200,200), 1, 1)
+                draw.SimpleText(text, "FInventoryExtraSmallFont", w / 2, h / 1.2, finventoryConfig.Theme.veryMuchLightColor, 1, 1)
             else
-                draw.RoundedBox(4, 0, 0, w, h, Color(40, 40, 40, 255))
+                draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
             end
         end
         itemsGrid:AddItem(itemCard)

@@ -104,7 +104,7 @@ finventoryConfig.model = "models/Humans/Group01/male_02.mdl"
 -- // The base pocket place
 finventoryConfig.basePlace = 3
 -- // If the content of your pocket or you bag is dropped when you die
-finventoryConfig.dropOnDeath = false
+finventoryConfig.dropOnDeath = true
 -- // If you want to make backpack in the F4 menu automatically (else there is some notes at the end of the config)
 finventoryConfig.automaticF4Items = true
 -- // If the content of your pocket or you bag is deleted when you disconnect
@@ -217,6 +217,33 @@ finventoryConfig.backpacks = {
                                         is in the <finventoryConfig.backpacks> array
     })
 */
+
+
+finventoryConfig.Theme = {
+    veryMuchLightColor = Color(200, 200, 200),
+    veryLightColor = Color(50, 50, 50),
+    lightColor = Color(40, 40, 40),
+    middleColor = Color(30, 30, 30),
+    middleDarkColor = Color(35, 35, 35),
+    darkColor = Color(20, 20, 20),
+
+    successColor = Color(20, 171, 20),
+    loadBarColor = Color(250, 50, 50),
+    backgroundColor = Color(0, 0, 0, 0),
+}
+
+-- finventoryConfig.Theme = {
+--     veryMuchLightColor = Color(20, 20, 20),
+--     veryLightColor = Color(200, 200, 200),
+--     lightColor = Color(190, 190, 190),
+--     middleColor = Color(180, 180, 180),
+--     middleDarkColor = Color(185, 185, 185),
+--     darkColor = Color(170, 170, 170),
+
+--     successColor = Color(20, 171, 20),
+--     loadBarColor = Color(250, 50, 50),
+--     backgroundColor = Color(0, 0, 0, 0),
+-- }
 
 finventoryConfig.Language = {}
 finventoryConfig.Language["Backpack vendor"] = {

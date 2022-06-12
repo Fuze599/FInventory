@@ -5,21 +5,30 @@ Bank.__index = Bank
 
 function Bank:new(owner, jsonTable)
     local bankTable = util.JSONToTable(jsonTable)
+    local content = fillItemTable(bankTable)
 	return setmetatable({ 
         owner = owner,
-		content = bankTable or {}
+		content = content or {}
 	}, Bank)
+end
+
+function fillItemTable(inventoryContent)
+    local itemTable = {}
+    for k, v in pairs(inventoryContent) do
+        itemTable[#itemTable + 1] = Item(v.itemType, v.class, v.model, v.name, v.count, v.content)
+    end
+    return itemTable
 end
 
 function Bank:add(item) 
     if self:isFull() or not finventoryConfig.acceptedEntities[item:GetClass()] then return false end
-
     self.content[self:nextPlaceIndex()] = item
+    self:save()
     return true
 end
 
-function Bank:addToIndex(item, index) 
-    if not finventoryConfig.acceptedEntities[item.class] or self:isFull() then 
+function Bank:addToIndex(item, index)
+    if not finventoryConfig.acceptedEntities[item:getClass()] or self:isFull() then 
         return false
     end
     
@@ -40,13 +49,13 @@ function Bank:stringify(index)
 end
 
 function Bank:saveInFile()
-    local bankPath = finventoryConfig.saveFolderName .. "/finventory_bank_" .. self.owner:SteamID64() .. ".json"
+    local bankPath = self:getSavePath()
     local jsonBank = self:stringify()
     file.Write(bankPath, jsonBank) 
 end
 
 function Bank:save()
-    if not IsValid(self.owner) then return false end
+    if not IsValid(self:getOwner()) then return false end
     if finventoryConfig.enhancedSaving then
         self:saveInFile()
     else
@@ -68,6 +77,14 @@ end
 
 function Bank:isFull()
     return self:getActualPlace() >= finventoryConfig.bankPlace
+end
+
+function Bank:getOwner()
+    return self.owner
+end
+
+function Bank:getSavePath()
+    return finventoryConfig.saveFolderName .. "/finventory_bank_" .. self.owner:SteamID64() .. ".json"
 end
 
 setmetatable(Bank, {__call = Bank.new })
