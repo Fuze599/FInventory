@@ -26,3 +26,15 @@ function getInventoryPropertiesByUniqueName(uniqueName)
         return inventoryProperties 
     end
 end
+
+function getItemWeaponString()
+	return "weapon"
+end
+
+function getItemShipmentString()
+	return "shipment"
+end
+
+function getItemEntityString()
+	return "entity"
+end

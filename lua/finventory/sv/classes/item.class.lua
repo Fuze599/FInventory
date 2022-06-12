@@ -6,7 +6,7 @@ Item.__index = Item
 function Item:new(itemType, class, model, name, count, content)
     if not itemType or not class or not model then return end
 
-    if class == finventoryConfig.spawnedWeaponName then 
+    if class == finventoryConfig.spawnedWeaponClass then 
         local newClass, newName = weaponHandling(entity)
         if newClass then class = newClass end
         if newName then name = newName end
@@ -29,6 +29,22 @@ end
 /******************
 * GETTERS/SETTERS *
 *******************/
+
+function Item:isWeapon()
+	return self.itemType == getItemWeaponString()
+end
+
+function Item:isAccepted()
+	return finventoryConfig.acceptedEntities[self:getClass()] or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
+end
+
+function Item:isShipment()
+	return self.itemType == getItemShipmentString()
+end
+
+function Item:isEntity()
+	return self.itemType == getItemEntityString()
+end
 
 function Item:getItemType()
 	return self.itemType

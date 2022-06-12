@@ -94,23 +94,23 @@ function ply:pickupItem(itemEntity)
 end
 
 function createItem(itemEntity)
-    local itemType = "entity"
+    local itemType = getItemEntityString()
     local class = itemEntity:GetClass()
     local model = itemEntity:GetModel()
     local name = itemEntity.PrintName
     local count
     local content
 
-    if class == "spawned_weapon" then 
-        itemType = "weapon"
+    if class == finventoryConfig.spawnedWeaponClass then 
+        itemType = getItemWeaponString()
         count = itemEntity:Getamount()
         class = itemEntity:GetWeaponClass() 
         local metaTableWeapon = weapons.Get(class)
         if metaTableWeapon and metaTableWeapon.PrintName then 
             name = metaTableWeapon.PrintName 
         end
-    elseif class == "spawned_shipment" then
-        itemType = "shipment"
+    elseif class == finventoryConfig.spawnedShipmentClass then
+        itemType = getItemShipmentString()
         count = itemEntity:Getcount()
         content = itemEntity:Getcontents()
     end
@@ -147,17 +147,17 @@ function ply:spawnItem(item)
     })
 
     local spawnedItem
-    if item:getItemType() == "entity" then
+    if item:isEntity() then
         spawnedItem = ents.Create(item:getClass())
         if not IsValid(spawnedItem) then return end
-    elseif item:getItemType() == "weapon" then 
-        spawnedItem = ents.Create("spawned_weapon")
+    elseif item:isWeapon() then 
+        spawnedItem = ents.Create(finventoryConfig.spawnedWeaponClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem:SetWeaponClass(item:getClass())
         spawnedItem:SetModel(item:getModel())
         spawnedItem:Setamount(item:getCount())
-    elseif item:getItemType() == "shipment" then
-        spawnedItem = ents.Create("spawned_shipment")
+    elseif item:isShipment() then
+        spawnedItem = ents.Create(finventoryConfig.spawnedShipmentClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem:Setcount(item:getCount())
         spawnedItem:Setcontents(item:getContent())

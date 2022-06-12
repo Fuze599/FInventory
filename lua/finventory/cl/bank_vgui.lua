@@ -106,10 +106,23 @@ function showBankDerma(inventory, bank)
             local isOccuped = false
             if j <= #actualInventory then
                 local entity = scripted_ents.Get(actualInventory[j])
-                if (actualInventory[j]) then
-                    modelItem = actualInventory[j].model
-                    nameItem = actualInventory[j].name
+                if actualInventory[j] then
                     isOccuped = true
+
+                    if actualInventory[j].itemType == getItemShipmentString() then
+                        local class = CustomShipments[actualInventory[j].content].entity
+                        local metaTableWeapon = weapons.Get(class)
+                        nameItem = metaTableWeapon.PrintName .. " (ship.)"
+                        modelItem = CustomShipments[actualInventory[j].content].model
+                    else
+                        modelItem = actualInventory[j].model
+                        nameItem = actualInventory[j].name
+                    end
+    
+                    if actualInventory[j].count > 1 then
+                        nameItem = actualInventory[j].count .. " " .. nameItem
+                    end
+
                 end
             end
 
@@ -149,7 +162,7 @@ function showBankDerma(inventory, bank)
             if isOccuped then
                 buttonItem.DoClick = function()
                     local toggled = togglePlace(bankButtons, inventoryButtons, modelItemPanel, buttonItem, isBank, buttonBackgroundItem)
-                    if not toggled then showNotification(LocalPlayer(), "You don't have enough place!") end
+                    if not toggled then LocalPlayer():showNotification("You don't have enough place!") end
                 end 
             else
                 buttonItem:SetCursor("arrow")
@@ -227,9 +240,9 @@ function togglePlace(bankButtons, inventoryButtons, actualSideModel, actualSideB
     otherSideBackgroundButton.text = actualSideButtonBackgroundItem.text
     otherSideBackgroundButton.Paint = function(self, w, h) 
         if (otherSideButton:IsHovered()) then
-            draw.RoundedBox(4, 0, 0, w, h, inventoryConfig.Theme.middleColor)
+            draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.middleColor)
         else
-            draw.RoundedBox(4, 0, 0, w, h, inventoryConfig.Theme.lightColor)
+            draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
         end
         draw.SimpleText(otherSideBackgroundButton.text, "FInventoryExtraSmallFont", w / 2, h / 1.2, finventoryConfig.Theme.veryMuchLightColor, 1, 1)
     end
@@ -245,7 +258,7 @@ function togglePlace(bankButtons, inventoryButtons, actualSideModel, actualSideB
     otherSideButton.DoClick = function()
         local toggled = togglePlace(bankButtons, inventoryButtons, otherSideModel, otherSideButton, 
                                       not isBank, otherSideBackgroundButton)
-        if not toggled then showNotification(LocalPlayer(), "You don't have enough place!") end
+        if not toggled then LocalPlayer():showNotification("You don't have enough place!") end
     end
 
     // Set model and button of the new place

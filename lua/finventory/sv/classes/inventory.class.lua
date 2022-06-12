@@ -23,17 +23,9 @@ function Inventory:new(owner, uniqueName, content)
 	}, Inventory)
 end
 
-function fillItemTable(inventoryContent)
-    local itemTable = {}
-    for k, v in pairs(inventoryContent) do
-        itemTable[#itemTable + 1] = Item(v.itemType, v.class, v.model, v.name, v.count, v.content)
-    end
-    return itemTable
-end
-
 function Inventory:add(item) 
     if not IsValid(self.owner) then return false end
-    if not finventoryConfig.acceptedEntities[item:getClass()] then
+    if not item:isAccepted() then
         return false
     elseif self:isFull() then 
         self.owner:sendNotification("No more place!") 
@@ -48,7 +40,7 @@ function Inventory:add(item)
 end
 
 function Inventory:addToIndex(item, index) 
-    if not finventoryConfig.acceptedEntities[item.class] or self:isFull() then 
+    if not item:isAccepted() or self:isFull() then 
         return false
     end
     

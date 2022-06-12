@@ -144,7 +144,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
         end
         dropBackpackButton.Paint = function(self, w, h)
             if self:IsHovered() then
-                draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.middleDarkColor)
+                draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.middleLightColor)
             else
                 draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.lightColor)
             end
@@ -176,13 +176,25 @@ function showInventoryDerma(inventory, inspectedPlayer)
         local isOccuped = false
         local modelItem = ""
         local text = ""
-        
+
         if i <= #inventory.content then
             local entity = scripted_ents.Get(inventory.content[i])
-            if (inventory.content[i]) then
-                modelItem = inventory.content[i].model
-                text = inventory.content[i].name
+            if inventory.content[i] then
                 isOccuped = true
+
+                if inventory.content[i].itemType == getItemShipmentString() then
+                    local class = CustomShipments[inventory.content[i].content].entity
+                    local metaTableWeapon = weapons.Get(class)
+                    text = metaTableWeapon.PrintName .. " (ship.)"
+                    modelItem = CustomShipments[inventory.content[i].content].model
+                else
+                    modelItem = inventory.content[i].model
+                    text = inventory.content[i].name
+                end
+
+                if inventory.content[i].count > 1 then
+                    text = inventory.content[i].count .. " " .. text
+                end
             end
         end
 

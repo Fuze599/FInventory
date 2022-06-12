@@ -1,4 +1,4 @@
-SWEP.PrintName 		= finventoryConfig.Language["Inventory Checker"][finventoryConfigInGame.lang.value]
+SWEP.PrintName 		= "Inventory Checker"
 SWEP.Author 		= "Couicos"
 SWEP.Contact 		= "No no no"
  
