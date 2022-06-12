@@ -38,3 +38,11 @@ end
 function getItemEntityString()
 	return "entity"
 end
+
+function getItemAmmoString()
+	return "ammo"
+end
+
+function getItemFoodString()
+	return "food"
+end

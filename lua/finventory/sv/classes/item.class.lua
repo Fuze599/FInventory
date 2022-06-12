@@ -17,7 +17,7 @@ function Item:new(itemType, class, model, name, count, content)
     end
 
 	return setmetatable({ 
-		itemType = itemType, -- weapon, entity, shipment
+		itemType = itemType, -- weapon, entity, shipment, ammo
 		class = class,
 		model = model,
 		name = name or "",
@@ -30,12 +30,12 @@ end
 * GETTERS/SETTERS *
 *******************/
 
-function Item:isWeapon()
-	return self.itemType == getItemWeaponString()
-end
-
 function Item:isAccepted()
-	return finventoryConfig.acceptedEntities[self:getClass()] or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
+	return finventoryConfig.acceptedEntities[self:getClass()] 
+		   or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
+		   or (finventoryConfig.foodCanBeTaken and self:isFood())
+		   or (finventoryConfig.ammoCanBeTaken and self:isAmmo())
+		   or (finventoryConfig.shipmentCanBeTaken and self:isShipment())
 end
 
 function Item:isShipment()
@@ -44,6 +44,18 @@ end
 
 function Item:isEntity()
 	return self.itemType == getItemEntityString()
+end
+
+function Item:isWeapon()
+	return self.itemType == getItemWeaponString()
+end
+
+function Item:isAmmo()
+	return self.itemType == getItemAmmoString()
+end
+
+function Item:isFood()
+	return self.itemType == getItemFoodString()
 end
 
 function Item:getItemType()

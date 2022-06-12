@@ -38,6 +38,13 @@ finventoryConfig.enhancedSaving = true
 // If a player can take any weapon in his inventory (if the player should only take the designated 
 // weapons, set it to false and add the classes of it in the accepted entities)
 finventoryConfig.weaponsCanBeTaken = true
+// If a player can take food in his inventory
+finventoryConfig.foodCanBeTaken = true
+// If a player can take any ammo in his inventory
+finventoryConfig.ammoCanBeTaken = true
+// If a player can take any shipment in his inventory
+finventoryConfig.shipmentCanBeTaken = true
+
 
 // /!\ For all configuration below, it is not recommended to change /!\
 
@@ -56,13 +63,15 @@ finventoryConfig.maxUIntByte = math.ceil(math.log(finventoryConfig.maxInventoryS
 finventoryConfig.spawnedWeaponClass = "spawned_weapon"
 // The entity class of spawned shipment
 finventoryConfig.spawnedShipmentClass = "spawned_shipment"
+// The entity class of spawned ammo
+finventoryConfig.spawnedAmmoClass = "spawned_ammo"
+// The entity class of spawned food
+finventoryConfig.spawnedFoodClass = "spawned_food"
 // The name of the save folder
 finventoryConfig.saveFolderName = "finventory"
 
 // The list of entities that can be taken 
 finventoryConfig.acceptedEntities = {
-    weapon_deagle2 = true,
-    spawned_shipment = true,
     edit_fog = true,
     edit_sky = true,
     edit_sun = true,

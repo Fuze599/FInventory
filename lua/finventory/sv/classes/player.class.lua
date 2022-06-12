@@ -113,6 +113,13 @@ function createItem(itemEntity)
         itemType = getItemShipmentString()
         count = itemEntity:Getcount()
         content = itemEntity:Getcontents()
+    elseif class == finventoryConfig.spawnedAmmoClass then
+        itemType = getItemAmmoString()
+        count = itemEntity.amountGiven
+        content = itemEntity.ammoType
+    elseif class == finventoryConfig.spawnedFoodClass then
+        itemType = getItemFoodString()
+        content = itemEntity.foodItem
     end
 
     return Item(itemType, class, model, name, count, content)
@@ -161,6 +168,18 @@ function ply:spawnItem(item)
         if not IsValid(spawnedItem) then return end
         spawnedItem:Setcount(item:getCount())
         spawnedItem:Setcontents(item:getContent())
+    elseif item:isAmmo() then
+        spawnedItem = ents.Create(finventoryConfig.spawnedAmmoClass)
+        if not IsValid(spawnedItem) then return end
+        spawnedItem.amountGiven = item:getCount()
+        spawnedItem.ammoType = item:getContent()
+        spawnedItem:SetModel(item:getModel())
+    elseif item:isFood() then
+        spawnedItem = ents.Create(finventoryConfig.spawnedFoodClass)
+        if not IsValid(spawnedItem) then return end
+        spawnedItem.foodItem = item:getContent()
+        spawnedItem.FoodEnergy = spawnedItem.foodItem.energy
+        spawnedItem:SetModel(item:getModel())
     end
 
     spawnedItem:SetPos(traceLine.HitPos)
