@@ -1,4 +1,4 @@
-local function LoadAllFiles(fdir)
+local function loadAllFiles(fdir)
 
 	local files,dirs = file.Find(fdir.."*", "LUA")
 	
@@ -10,9 +10,9 @@ local function LoadAllFiles(fdir)
 	end
 	
 	for _,dir in ipairs(dirs) do
-		LoadAllFiles(fdir..dir.."/")
+		loadAllFiles(fdir..dir.."/")
 	end
  
 end
 
-LoadAllFiles("finventory/") 
+loadAllFiles("finventory/") 

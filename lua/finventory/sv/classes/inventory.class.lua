@@ -28,12 +28,12 @@ function Inventory:add(item)
     if not item:isAccepted() then
         return false
     elseif self:isFull() then 
-        self.owner:sendNotification("No more place!") 
+        self.owner:sendNotification(finventoryConfig.Language.noMorePlace) 
         return false
     end
 
     self.content[self:nextPlaceIndex()] = item
-    self.owner:sendNotification("You taken an entity!") 
+    self.owner:sendNotification(finventoryConfig.Language.takeItemSuccess) 
 
     self:save()
     return true

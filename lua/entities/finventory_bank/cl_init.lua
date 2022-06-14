@@ -5,8 +5,8 @@ function ENT:Draw()
     self:DrawModel()
 
     local angle = self:GetAngles()
-	angle:RotateAroundAxis( angle:Up(), -180 )
-	angle:RotateAroundAxis( angle:Forward(), 90 )
+	angle:RotateAroundAxis(angle:Up(), -180)
+	angle:RotateAroundAxis(angle:Forward(), 90)
 
 	if LocalPlayer():GetPos():Distance(self:GetPos()) < finventoryConfig.distance3D2D then
 		    cam.Start3D2D(self:GetPos(), angle, 0.1)

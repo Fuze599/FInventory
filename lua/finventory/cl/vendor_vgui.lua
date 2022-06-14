@@ -52,7 +52,7 @@ function showVendorDerma(ply)
     mainTitle:SetPos(ScrW() * 15 / 1920, ScrH() * -6 / 1080)
     mainTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
     mainTitle:SetFont("FInventoryLargeFont")
-    mainTitle:SetText("Backpack vendor")
+    mainTitle:SetText(finventoryConfig.Language.vendor)
 
     local vendorModel = vgui.Create("DModelPanel", mainFrame)
     vendorModel:SetSize(ScrW() * 432.4 / 1920, ScrH() * 812 / 1080) 
@@ -130,14 +130,14 @@ function showVendorDerma(ply)
         placeText:SetPos(ScrW() * 180 / 1920, ScrH() * 50 / 1080)
         placeText:SetSize(ScrW() * 500 / 1920, ScrH() * 50 / 1920)
         placeText:SetFont("FInventorySmallFont")
-        placeText:SetText("Place : " .. v.place)
+        placeText:SetText(finventoryConfig.Language.place .. v.place)
 
         if finventoryConfig.isGamemodeDarkRP then
             local price = vgui.Create("DLabel", buttonBackgroundItem)
             price:SetPos(ScrW() * 180 / 1920, ScrH() * 75 / 1080)
             price:SetSize(ScrW() * 500 / 1920, ScrH() * 50 / 1080)
             price:SetFont("FInventorySmallFont")
-            price:SetText("Price :" .. v.price .. "$")
+            price:SetText(finventoryConfig.Language.price .. v.price .. finventoryConfig.currency)
         end
 
         if ply.finventoryUniqueName ~= k then
@@ -151,7 +151,7 @@ function showVendorDerma(ply)
                 else
                     draw.RoundedBox(10, 0, 0, w, h, finventoryConfig.Theme.middleColor)
                 end
-                draw.DrawText("Buy", "FInventorySmallFont", w/2, h/2 - h/5, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
+                draw.DrawText(finventoryConfig.Language.buy, "FInventorySmallFont", w/2, h/2 - h/5, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
             end
             buyButton.DoClick = function() 
                 mainFrame:Close() 
@@ -167,7 +167,7 @@ function showVendorDerma(ply)
             BoughtText:SetText("") 
             BoughtText:SetColor(finventoryConfig.Theme.successColor)
             BoughtText.Paint = function(self, w, h)
-                draw.DrawText("Bought", "FInventorySmallFont", w/7.5, h/2 - h/5, finventoryConfig.Theme.successColor, TEXT_ALIGN_CENTER)
+                draw.DrawText(finventoryConfig.Language.bought, "FInventorySmallFont", w/7.5, h/2 - h/5, finventoryConfig.Theme.successColor, TEXT_ALIGN_CENTER)
             end
         end
         backpackGrid:AddItem(backpackCard)

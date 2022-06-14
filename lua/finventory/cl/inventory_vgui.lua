@@ -72,9 +72,9 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
     closeButton.DoClick = function() quitInventory() end
 
-    local title = "Inventory"
+    local title = finventoryConfig.Language.inventory
     if checkMod then
-        title = "Search inventory"
+        title = finventoryConfig.Language.searchInventory
     end
 
     local mainTitle = vgui.Create("DLabel", mainFrame)
@@ -121,8 +121,8 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
 
     if (not inventory.isPocket and not checkMod) or hasIllegalItem then
-        local buttonName = "Drop the bag"
-        if hasIllegalItem then buttonName = "Remove Illegals Items" end
+        local buttonName = finventoryConfig.Language.dropBackpack
+        if hasIllegalItem then buttonName = finventoryConfig.Language.removeIllegalItems end
 
         local dropBackpackButton = vgui.Create("DButton", mainFrame)
         dropBackpackButton:SetPos(ScrW() * 100 / 1920, ScrH() * 490 / 1080)
@@ -152,23 +152,10 @@ function showInventoryDerma(inventory, inspectedPlayer)
         end
     end
 
-    local scroller = vgui.Create("DScrollPanel", mainFrame)
-    scroller:SetSize(ScrW() * 526 / 1920, ScrH() * 502.3 / 1080)
-    scroller:SetPos(ScrW() * 425.7 / 1920, ScrH() * 55 / 1080)
-    local sbar = scroller:GetVBar()
-    sbar:SetHideButtons(true)
-    sbar.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.darkColor)
-    end
-    sbar.btnGrip.Paint = function(self,w,h)
-        draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.middleColor)
-    end
-
-    local itemsGrid = vgui.Create("DGrid", scroller)
-    itemsGrid:SetPos(0, 0)
-    itemsGrid:SetCols(3)
-    itemsGrid:SetColWide(ScrW() * 166.66 / 1920)
-    itemsGrid:SetRowHeight(ScrH() * 166.66 / 1080)
+    local widthScroller = ScrW() * 425.7 / 1920
+    local heightScroller = ScrH() * 95 / 1920
+    local sbarWidth = ScrH() * 525 / 1080
+    local gridItems = getScroller(mainFrame, widthScroller, heightScroller, sbarWidth)
 
     local decalingIndex = {}
     for i = 1, inventory.place do
@@ -177,64 +164,9 @@ function showInventoryDerma(inventory, inspectedPlayer)
         local modelItem = ""
         local text = ""
 
-        if i <= #inventory.content then
-            local entity = scripted_ents.Get(inventory.content[i])
-            if inventory.content[i] then
-                isOccuped = true
+        local buttonItem, modelItemPanel, buttonBackgroundItem , isOccuped, nameItem
+                    = getGrid(gridItems, inventory.content, i)
 
-                if inventory.content[i].itemType == getItemShipmentString() then
-                    text = inventory.content[i].name .. " (ship.)"
-                    modelItem = CustomShipments[inventory.content[i].content].model
-                elseif inventory.content[i].itemType == getItemAmmoString() then
-                    local ammoName = game.GetAmmoName(game.GetAmmoID(inventory.content[i].content))
-                    modelItem = inventory.content[i].model
-                    text = ammoName .. " ammo"
-                elseif inventory.content[i].itemType == getItemFoodString() then
-                    modelItem = inventory.content[i].model
-                    text = inventory.content[i].content.name
-                else
-                    modelItem = inventory.content[i].model
-                    text = inventory.content[i].name
-                end
-
-                if inventory.content[i].count > 1 then
-                    text = inventory.content[i].count .. " " .. text
-                end
-            end
-        end
-
-        local itemCard = vgui.Create("DPanel")
-        itemCard:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080) 
-        itemCard.Paint = function(self, w, h)
-            surface.SetDrawColor(55, 55, 55, 255)
-            surface.DrawTexturedRect(0, 0, w, h)
-        end
-
-        local buttonBackgroundItem = vgui.Create("DButton", itemCard)
-        buttonBackgroundItem:SetPos(0, 0)
-        buttonBackgroundItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
-        buttonBackgroundItem:SetText("")
-
-        // Item model
-        local itemModelPanel = vgui.Create("DModelPanel", buttonBackgroundItem)
-        itemModelPanel:SetSize(ScrW() * 120.2 / 1920, ScrH() * 120.2 / 1080)
-        itemModelPanel:SetPos(ScrW() * 20 / 1920, 0)
-        itemModelPanel:SetModel(modelItem)
-        itemModelPanel.LayoutEntity = function(self)
-            local size1, size2 = self.Entity:GetRenderBounds()
-            local size = (-size1+size2):Length()
-            self:SetFOV(25)
-            self:SetCamPos(Vector(size*2,size*1,size*1))
-            self:SetLookAt((size1+size2)/2)
-        end	
-
-        local buttonItem = vgui.Create("DButton", buttonBackgroundItem)
-        buttonItem:SetPos(0, 0)
-        buttonItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
-        buttonItem:SetText("")
-        buttonItem.Paint = function(self, w, h) 
-            draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
-        end
         if isOccuped and not checkMod then
             buttonItem.DoClick = function()
                 net.Start("finventoryDropItem")
@@ -248,66 +180,17 @@ function showInventoryDerma(inventory, inspectedPlayer)
                 if finventoryConfig.closeInventoryPanelOnDrop then
                     mainFrame:Remove()
                 else
-                    itemModelPanel:Hide()
-                    text = ""
-                    isOccuped = false
+                    modelItemPanel:SetModel("")
                     buttonItem:SetCursor("arrow")
                     buttonItem.DoClick = function() end
+                    buttonBackgroundItem.Paint = function(self, w, h) 
+                        draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
+                    end                    
                 end
             end
-            -- local nbButton = 1
-            -- if false then 
-            --     // isweapon
-            --     nbButton = 2
-            -- end
-            -- for i = 1, nbButton do
-
-            --     local vertical = 50
-            --     local text = "Drop"
-            --     if nbButton == 2 and i ~= 2 then
-            --         vertical = 23
-            --     elseif nbButton == 2 and i == 2 then
-            --         vertical = 75
-            --         text = "Equip"
-            --     end
-
-            --     local val = 0
-            --     local dropButton = vgui.Create("DButton", buttonBackgroundItem)
-            --     dropButton:SetText("")
-            --     dropButton:SetPos(30, vertical)
-            --     dropButton:SetSize(100, 40)
-            --     function dropButton:Paint(w, h)
-            --         local buttonColor = Color(40, 40, 40, val)
-            --         if buttonItem:IsHovered() or dropButton:IsHovered() then  
-            --             val = val + 40
-            --             if val > 255 then val = 255 end
-            --             if dropButton:IsHovered() then
-            --                 buttonColor = Color(28, 28, 28, val)
-            --             end
-            --         else   
-            --             val = val - 40 
-            --             if val < 0 then val = 0 end
-            --         end
-            --         draw.RoundedBox(8, 0, 0, w, h, buttonColor)
-            --         draw.SimpleText(text, "FInventoryExtraSmallFont", w / 2, 20, Color(200,200,200, val), 1, 1)
-            --     end
-            -- end
         else
             buttonItem:SetCursor("arrow")
         end 
-        buttonBackgroundItem.Paint = function(self, w, h) 
-            if isOccuped then
-                if buttonItem:IsHovered() and not checkMod then
-                    draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.middleColor)
-                else
-                    draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
-                end
-                draw.SimpleText(text, "FInventoryExtraSmallFont", w / 2, h / 1.2, finventoryConfig.Theme.veryMuchLightColor, 1, 1)
-            else
-                draw.RoundedBox(4, 0, 0, w, h, finventoryConfig.Theme.lightColor)
-            end
-        end
-        itemsGrid:AddItem(itemCard)
     end
 end
 net.Receive('finventoryGetInventoryDerma', function()

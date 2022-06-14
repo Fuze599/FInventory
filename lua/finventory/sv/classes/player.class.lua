@@ -12,6 +12,8 @@ util.AddNetworkString("finventoryShowLoadBar")
 util.AddNetworkString("finventoryDeleteIllegalItems")
 util.AddNetworkString("finventoryGetInventoryDerma")
 util.AddNetworkString("finventoryCloseDerma")
+util.AddNetworkString("finventoryShowInventoryAsAdminRet")
+util.AddNetworkString("finventoryShowInventoryAsAdmin")
 
 local ply = FindMetaTable("Player")
 
@@ -143,13 +145,13 @@ function ply:dropItem(index)
 
     local removedItem = inventory:remove(index)
     if not removedItem then 
-        self:sendNotification("You cannot drop this!") 
+        self:sendNotification(finventoryConfig.Language.dropItemFail) 
         return 
     end
 
     self:spawnItem(removedItem)
 
-    self:sendNotification("You dropped an item!") 
+    self:sendNotification(finventoryConfig.Language.dropItemSuccess) 
 end
 net.Receive("finventoryDropItem", function(len, ply) 
     local index = net.ReadUInt(finventoryConfig.maxUIntByte)
@@ -203,7 +205,7 @@ function ply:pickupBackpack(backpack)
 
     local formerInventory = self:retrieveInventory()
     if not formerInventory:getIsPocket() then 
-        self:sendNotification("Drop your current backpack!") 
+        self:sendNotification(finventoryConfig.Language.pickupBackpackFailAlreadyBack) 
         return false
     end
 
@@ -211,7 +213,7 @@ function ply:pickupBackpack(backpack)
 
     local isContentAdded = newInventory:addAllContentOf(formerInventory)
     if not isContentAdded then 
-        self:sendNotification("Throw away the items you carry!")
+        self:sendNotification(finventoryConfig.Language.pickupBackpackFailTooMuchItem)
         return false 
     end
 
@@ -219,9 +221,9 @@ function ply:pickupBackpack(backpack)
     self:loadModel()
 
     if newInventory:getIsPocket() then
-        self:sendNotification("You picked up a box!") 
+        self:sendNotification(finventoryConfig.Language.pickupBoxSuccess) 
     else
-        self:sendNotification("You picked up a backpack!") 
+        self:sendNotification(finventoryConfig.Language.pickupBackpackSuccess) 
     end
     
     return true
@@ -251,7 +253,7 @@ function ply:dropInventory(hasNotification)
     self:loadModel() 
 
     if hasNotification then
-        self:sendNotification("You dropped your bag") 
+        self:sendNotification(finventoryConfig.Language.dropBackpackSuccess) 
     end
 end
 net.Receive("finventoryDropInventory", function(len, ply) 
@@ -319,16 +321,16 @@ function ply:buyInventory(inventoryUniqueName)
         if newInventory:addAllContentOf(self:retrieveInventory()) then 
             if finventoryConfig.isGamemodeDarkRP then
                 self:addMoney(-newInventory:getPrice())
-                self:sendNotification("You've bought a new backpack for " .. newInventory:getPrice() .. "$!") 
+                self:sendNotification(Format(finventoryConfig.Language.buyBackpackSuccessDRP, newInventory:getPrice())) 
             else
-                self:sendNotification("You bought a new backpack!")
+                self:sendNotification(finventoryConfig.Language.buyBackpackSuccess)
             end
             self:loadModel()
         else
-            self:sendNotification("Throw away the items you carry!") 
+            self:sendNotification(finventoryConfig.Language.pickupBackpackFailTooMuchItem) 
         end
     elseif finventoryConfig.isGamemodeDarkRP then
-        self:sendNotification("You don't have enought money!") 
+        self:sendNotification(finventoryConfig.Language.notEnoughMoney) 
     end
 end
 net.Receive("finventoryBuyInventory", function(len, ply) 
@@ -337,15 +339,7 @@ net.Receive("finventoryBuyInventory", function(len, ply)
 end)
 
 function ply:changeInspectionMode(inspectedPlayer, activated)
-    if not IsValid(inspectedPlayer) or not IsValid(self) then return end
-    if inspectedPlayer:GetPos():Distance(self:GetPos()) > finventoryConfig.distanceChecker then 
-        self:sendNotification("You're too far from the person!")
-        return false
-    end
-    if finventoryConfig.isGamemodeDarkRP and not self:isCP() then 
-        self:sendNotification("You're not allowed to do this!")
-        return false
-    end
+    if not checkPlayerInspectionValid(self, inspectedPlayer) then return end
 
     inspectedPlayer:Freeze(activated)
     if activated and finventoryConfig.timePoliceControl > 0 then --> unfreeze after x seconds
@@ -368,18 +362,10 @@ function ply:showLoadingBar(inspectedPlayer, isInspector)
     net.Send(self)
 end
 
-function ply:deleteIllegalItems(suspect)
-    if not IsValid(self) or not IsValid(suspect) then return end
-    if self:GetPos():Distance(suspect:GetPos()) > finventoryConfig.distanceChecker then 
-        self:sendNotification("You're too far from the person")
-        return false
-    end
-    if finventoryConfig.isGamemodeDarkRP and not self:isCP() then 
-        self:sendNotification("You're not allowed to do this!")
-        return false
-    end
+function ply:deleteIllegalItems(inspectedPlayer)
+    if not checkPlayerInspectionValid(self, inspectedPlayer) then return end
 
-    local suspectInventory = suspect:retrieveInventory()
+    local suspectInventory = inspectedPlayer:retrieveInventory()
 
     local nbRemovedItems = suspectInventory:deleteIllegalItems()
     if nbRemovedItems == 0 then return false end
@@ -388,18 +374,31 @@ function ply:deleteIllegalItems(suspect)
 
     if finventoryConfig.removeIllegalItemPay > 0 and finventoryConfig.isGamemodeDarkRP then
         self:addMoney(reward)
-        self:sendNotification("You have removed" .. nbRemovedItems .. "illegal items for " .. reward .. finventoryConfig.currency .. "!")
+        self:sendNotification(Format(finventoryConfig.Language.removedItemInspectorMoney, nbRemovedItems, reward))
     else
-        self:sendNotification("You have removed" .. nbRemovedItems .. "illegal items!") 
+        self:sendNotification(Format(finventoryConfig.Language.removedItemInspector, nbRemovedItems)) 
     end
 
-    suspect:sendNotification("You have had" .. nbRemovedItems .. " " .. "items requisitioned!") 
+    inspectedPlayer:sendNotification(Format(finventoryConfig.Language.removedItemSuspect, nbRemovedItems)) 
     return true
 end
 net.Receive("finventoryDeleteIllegalItems", function(len, ply) 
-    local suspect = net.ReadEntity()
-    ply:deleteIllegalItems(suspect) 
+    local inspectedPlayer = net.ReadEntity()
+    ply:deleteIllegalItems(inspectedPlayer) 
 end)
+
+function checkPlayerInspectionValid(inspectorPlayer, inspectedPlayer)
+    if not IsValid(inspectedPlayer) or not IsValid(inspectorPlayer) then return end
+    if inspectedPlayer:GetPos():Distance(inspectorPlayer:GetPos()) > finventoryConfig.distanceChecker then 
+        inspectorPlayer:sendNotification(finventoryConfig.Language.tooFarFromPerson)
+        return false
+    end
+    if finventoryConfig.isGamemodeDarkRP and not inspectorPlayer:isCP() then 
+        inspectorPlayer:sendNotification(finventoryConfig.Language.notAllowed)
+        return false
+    end
+    return true
+end
 
 function ply:showInventoryOf(ply)
     if not IsValid(ply) or not IsValid(self) then return end
@@ -409,3 +408,16 @@ function ply:showInventoryOf(ply)
     net.WriteEntity(ply)
     net.Send(self)
 end
+
+function showInventoryAsAdmin(ply)
+    if not IsValid(ply) or not IsValid(self) or not self:IsAdmin() then return end
+    local inventory = ply:retrieveInventory()
+
+    net.Start("finventoryShowInventoryAsAdminRet")
+    net.WriteTable(inventory)
+    net.Send(self)
+end
+net.Receive("finventoryShowInventoryAsAdmin", function(len, ply) 
+    local inspectedPlayer = net.ReadEntity()
+    ply:showInventoryAsAdmin(inspectedPlayer)
+end)

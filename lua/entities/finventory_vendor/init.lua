@@ -3,10 +3,10 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-util.AddNetworkString( "finventoryGetVendorDerma" )
+util.AddNetworkString("finventoryGetVendorDerma")
 
 function ENT:Initialize()
-	self:SetModel(finventoryConfigInGame.model.value)
+	self:SetModel(finventoryConfig.model)
 	self:SetHullType(HULL_HUMAN)
 	self:SetHullSizeNormal()
 	self:SetNPCState(NPC_STATE_SCRIPT)
@@ -21,8 +21,8 @@ function ENT:OnTakeDamage()
 	return false
 end
 
-function ENT:Use( activator )
-	net.Start( "finventoryGetVendorDerma" )
-	net.WriteEntity( activator )
-	net.Send( activator )
+function ENT:Use(activator)
+	net.Start("finventoryGetVendorDerma")
+	net.WriteEntity(activator)
+	net.Send(activator)
 end
