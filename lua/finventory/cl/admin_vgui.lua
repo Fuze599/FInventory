@@ -19,7 +19,6 @@ function showAdminVgui( configTable, selector )
         end)	
     end
 
-    // Main panel
     local mainFrame = vgui.Create( 'DFrame', backgroundFrame )
     mainFrame:SetSize( ScrW() * 0.6, ScrH() * 0.55 )
     mainFrame:SetTitle( '' )

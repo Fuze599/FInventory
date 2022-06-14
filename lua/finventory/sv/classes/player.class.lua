@@ -109,7 +109,7 @@ function createItem(itemEntity)
         class = itemEntity:GetWeaponClass() 
         
         local weaponName = getWeaponName(class)
-        if weaponName then  name = weaponName end
+        if weaponName then name = weaponName end
 
     elseif class == finventoryConfig.spawnedShipmentClass then
         itemType = getItemShipmentString()
