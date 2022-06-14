@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/couicos/backpacks/military_backpack_texture"
+	"$surfaceprop" "Default"
+	"$surfaceprop2" "Default"
+}
