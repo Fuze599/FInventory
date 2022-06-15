@@ -152,10 +152,11 @@ function showInventoryDerma(inventory, inspectedPlayer)
         end
     end
 
-    local widthScroller = ScrW() * 425.7 / 1920
-    local heightScroller = ScrH() * 95 / 1920
-    local sbarWidth = ScrH() * 525 / 1080
-    local gridItems = getScroller(mainFrame, widthScroller, heightScroller, sbarWidth)
+    local wPosScroller = ScrW() * 425.7 / 1920
+    local hPosScroller = ScrH() * 95 / 1920
+    local wSizeScroller = ScrH() * 525 / 1080
+    local hSizeScroller = ScrH() * 499 / 1080
+    local gridItems = getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
 
     local decalingIndex = {}
     for i = 1, inventory.place do

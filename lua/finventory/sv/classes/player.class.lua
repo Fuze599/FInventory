@@ -14,6 +14,7 @@ util.AddNetworkString("finventoryGetInventoryDerma")
 util.AddNetworkString("finventoryCloseDerma")
 util.AddNetworkString("finventoryShowInventoryAsAdminRet")
 util.AddNetworkString("finventoryShowInventoryAsAdmin")
+util.AddNetworkString("finventoryDeleteInventory")
 
 local ply = FindMetaTable("Player")
 
@@ -159,7 +160,7 @@ net.Receive("finventoryDropItem", function(len, ply)
 end)
 
 function ply:spawnItem(item)
-    if not IsValid(self) then return end
+    if not IsValid(self) or not item then return end
 
     local traceLine = util.TraceLine({
         start = self:EyePos(),
@@ -201,7 +202,7 @@ function ply:spawnItem(item)
 end
 
 function ply:pickupBackpack(backpack)
-    if not IsValid(self) then return end
+    if not IsValid(self) or not backpack then return end
 
     local formerInventory = self:retrieveInventory()
     if not formerInventory:getIsPocket() then 
@@ -237,6 +238,22 @@ function ply:loadModel()
     net.WriteTable(inventory)
     net.Broadcast()
 end
+
+function ply:deleteInventory(eraser)
+    if not IsValid(self) or not IsValid(eraser) then return end
+    if not eraser:IsAdmin() then return end
+    local inventory = self:retrieveInventory()
+ 
+    inventory:dropBackpack()
+    self:loadModel() 
+
+    self:sendNotification("Your inventory has been deleted!") 
+    eraser:sendNotification("Your have deleted the inventory of " .. self:Nick() .. "!") 
+end
+net.Receive("finventoryDeleteInventory", function(len, eraser) 
+    local ply = net.ReadEntity()
+    ply:deleteInventory(eraser) 
+end)
 
 function ply:dropInventory(hasNotification)
     if not IsValid(self) then return end
@@ -409,7 +426,7 @@ function ply:showInventoryOf(ply)
     net.Send(self)
 end
 
-function showInventoryAsAdmin(ply)
+function ply:showInventoryAsAdmin(ply)
     if not IsValid(ply) or not IsValid(self) or not self:IsAdmin() then return end
     local inventory = ply:retrieveInventory()
 

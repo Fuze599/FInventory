@@ -1,9 +1,9 @@
 if not CLIENT then return end
 
-function getScroller(mainFrame, widthScroller, heightScroller, sbarWidth)
+function getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
     local scroller = vgui.Create("DScrollPanel", mainFrame)
-    scroller:SetSize(sbarWidth, ScrH() * 499 / 1080)
-    scroller:SetPos(widthScroller, heightScroller)
+    scroller:SetSize(wSizeScroller, hSizeScroller)
+    scroller:SetPos(wPosScroller, hPosScroller)
     local sbar = scroller:GetVBar()
     sbar:SetHideButtons(true)
     sbar.Paint = function(self,w,h)

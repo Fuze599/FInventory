@@ -9,7 +9,7 @@ finventoryConfig.model = "models/Humans/Group01/male_02.mdl"
 // The base pocket place
 finventoryConfig.basePlace = 3
 // If the content of your pocket or you bag is dropped when you die
-finventoryConfig.dropOnDeath = true
+finventoryConfig.dropOnDeath = false
 // If the content of your pocket or you bag is deleted when you disconnect
 finventoryConfig.deleteInventoryOnDisconnect = false
 // If you want to close the inventory panel when you drop an item
@@ -126,6 +126,7 @@ finventoryConfig.Theme = {
     successColor = Color(20, 171, 20),
     loadBarColor = Color(250, 50, 50),
     backgroundColor = Color(0, 0, 0, 0),
+    selectTextColor = Color(130, 130, 255),
 }
 
 /*
@@ -197,6 +198,11 @@ finventoryConfig.Language.fr = {
     vendor = "Vendeur de sac à dos",
     price = "Prix : ",
     place = "Place : ",
+    adminPanel = "Panneau d'administration",
+    searchPlayer = " Rechercher un joueur",
+    allInventories = "Tous les inventaires",
+    job = "Métier : ",
+    bag = "Sac : ",
 }
 finventoryConfig.Language.en = {
     noMorePlace = "No more place!",
@@ -226,6 +232,11 @@ finventoryConfig.Language.en = {
     vendor = "Backpack vendor",
     price = "Price : ",
     place = "Place : ",
+    adminPanel = "Admin panel",
+    searchPlayer = " Search a player",
+    allInventories = "All inventories",
+    job = "Job : ",
+    bag = "Bag : ",
 }
 
 function loadLanguage() 

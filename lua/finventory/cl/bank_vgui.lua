@@ -70,20 +70,21 @@ function showBankDerma(inventory, bank)
     local inventoryButtons = {}
     for i = 1, 2 do 
         local isBank = i == 2
-        local widthScroller = ScrW() * 70 / 1920
+        local wPosScroller = ScrW() * 70 / 1920
         local actualInventory = inventory.content
         local otherInventory = bank.content
         local nbPlaceInventory = inventory.place
         if isBank then
-            widthScroller = ScrW() * 600 / 1920
+            wPosScroller = ScrW() * 600 / 1920
             actualInventory = bank.content
             otherInventory = inventory.content
             nbPlaceInventory = finventoryConfig.bankPlace
         end
 
-        local heightScroller = ScrH() * 75 / 1080
-        local sbarWidth = ScrW() * 515 / 1920
-        local gridItems = getScroller(mainFrame, widthScroller, heightScroller, sbarWidth)
+        local hPosScroller = ScrH() * 75 / 1080
+        local wSizeScroller = ScrW() * 515 / 1920
+        local hSizeScroller = ScrH() * 499 / 1080
+        local gridItems, scroller = getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
 
         for j = 1, nbPlaceInventory do
 
