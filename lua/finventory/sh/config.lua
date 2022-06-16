@@ -129,7 +129,7 @@ finventoryConfig.Theme = {
     selectTextColor = Color(130, 130, 255),
 }
 
-/*
+--[[ -- ADD DARKRP ENTITY
     If you want to add custom properties to your entity for sale in the F4 menu, 
     you must deactivate the option <finventoryConfig.automaticF4Items> and add it to your darkrpmodification
 
@@ -142,19 +142,19 @@ finventoryConfig.Theme = {
         max = 1,
         cmd = "simple_backpack" --> /!\ You have to put the unique name which is in the <finventoryConfig.backpacks> array
     })
-*/
+--]]
 
 // /!\ For all configuration below, it is not recommended to change /!\
 
 // The fluidity of the loading bar and checking 
 // distance between players, etc. when searching inventory
 finventoryConfig.loadingBarInterval = 20
-// The distance required for the inventory checker
+// The distance required for the inventory checker (Need distance beacause of synchronicity)
 finventoryConfig.distanceChecker = 130
 // The distance to show 3D2D
-finventoryConfig.distance3D2D = 250
+finventoryConfig.distance3D2D = 300000
 // The distance to pickup items
-finventoryConfig.distancePickupItems = 130
+finventoryConfig.distancePickupItems = 3000
 // DONT CHANGE / calculates the number of bytes for net messages based on the maximum inventory size
 finventoryConfig.maxUIntByte = math.ceil(math.log(finventoryConfig.maxInventorySize + 1, 2))
 // The entity class of spawned weapon

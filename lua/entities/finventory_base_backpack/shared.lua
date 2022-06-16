@@ -3,7 +3,7 @@ ENT.Base = "base_gmodentity"
  
 ENT.PrintName		= "Base Entity"
 ENT.Author			= "Couicos"
-ENT.Contact			= "No no no"
+ENT.Contact			= ""
 
 ENT.Spawnable = false
 ENT.AdminSpawnable = false

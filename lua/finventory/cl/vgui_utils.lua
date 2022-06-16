@@ -22,7 +22,6 @@ function getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSize
     return gridItems, scroller
 end
 
- 
 function getGrid(gridItems, actualInventory, inventoryIndex)
     local nameItem = ""
     local modelItem = ""

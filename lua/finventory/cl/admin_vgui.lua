@@ -182,11 +182,13 @@ function ply:showProfile(mainFrame, backgroundFrame, scrollerInfoFrame, gridInfo
     dlabelPlayerID:SetFont("FInventorySmallFont")
     dlabelPlayerID:SetText("SteamID : " .. self:SteamID())
 
-    local dlabelPlayerJob = scrollerInfoFrame:Add("DLabel")
-    dlabelPlayerJob:SetPos(ScrW() * 40 / 1920, ScrH() * 60 / 1080)
-    dlabelPlayerJob:SetSize(ScrW() * 500 / 1920, ScrH() * 100 / 1080)
-    dlabelPlayerJob:SetFont("FInventorySmallFont")
-    dlabelPlayerJob:SetText(finventoryConfig.Language.job .. self:getDarkRPVar("job"))
+    if finventoryConfig.isGamemodeDarkRP then
+        local dlabelPlayerJob = scrollerInfoFrame:Add("DLabel")
+        dlabelPlayerJob:SetPos(ScrW() * 40 / 1920, ScrH() * 60 / 1080)
+        dlabelPlayerJob:SetSize(ScrW() * 500 / 1920, ScrH() * 100 / 1080)
+        dlabelPlayerJob:SetFont("FInventorySmallFont")
+        dlabelPlayerJob:SetText(finventoryConfig.Language.job .. self:getDarkRPVar("job"))
+    end
     
     local buttonDeleteInventory = scrollerInfoFrame:Add("DButton")
     buttonDeleteInventory:SetPos(ScrW() * 40 / 1920, ScrH() * 400 / 1080)

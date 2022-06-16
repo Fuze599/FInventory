@@ -1,6 +1,6 @@
 SWEP.PrintName 		= "Inventory Checker"
 SWEP.Author 		= "Couicos"
-SWEP.Contact 		= "No no no"
+SWEP.Contact 		= ""
  
 SWEP.AdminSpawnable = true
 SWEP.Spawnable 		= true
