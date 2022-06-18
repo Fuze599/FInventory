@@ -136,7 +136,7 @@ function showAllInventory(mainFrame, backgroundFrame)
                 local buttonInventory = scrollerInfoFrame:Add("DButton")
                 buttonInventory:SetPos(ScrW() * 720 / 1920, ScrH() * (25 + pos) / 1080)
                 buttonInventory:SetSize(ScrW() * 150 / 1920, ScrH() * 50 / 1080)
-                buttonInventory:SetText("Voir l'inventaire")
+                buttonInventory:SetText(finventoryConfig.Language.showInventory)
                 buttonInventory.Paint = function(self,w,h)
                     draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.lightColor)
                 end
@@ -152,9 +152,9 @@ end
 
 function ply:showProfile(mainFrame, backgroundFrame, scrollerInfoFrame, gridInfoFrame, scrollerInventory, gridItemsInventory)
     local wPosScroller = ScrW() * 210 / 1920
-    local hPosScroller = ScrH() * 120 / 1080
+    local hPosScroller = ScrH() * 60 / 1080
     local wSizeScroller = ScrW() * 525 / 1080
-    local hSizeScroller = ScrH() * 470 / 1080
+    local hSizeScroller = ScrH() * 499 / 1080
 
     scrollerInfoFrame:Remove()
 
@@ -191,9 +191,9 @@ function ply:showProfile(mainFrame, backgroundFrame, scrollerInfoFrame, gridInfo
     end
     
     local buttonDeleteInventory = scrollerInfoFrame:Add("DButton")
-    buttonDeleteInventory:SetPos(ScrW() * 40 / 1920, ScrH() * 400 / 1080)
+    buttonDeleteInventory:SetPos(ScrW() * 40 / 1920, ScrH() * 450 / 1080)
     buttonDeleteInventory:SetSize(ScrW() * 150 / 1920, ScrH() * 50 / 1080)
-    buttonDeleteInventory:SetText("Supprimer l'inventaire")
+    buttonDeleteInventory:SetText(finventoryConfig.Language.deleteInventory)
     buttonDeleteInventory.Paint = function(self,w,h)
         draw.RoundedBox(5, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end
@@ -241,9 +241,9 @@ function showInventoryCases(configTable, gridItemsInventory, scrollerInfoFrame)
 end
 
 function searchUserRegex(text, ply)
-    return string.StartWith(string.lower(ply:Nick()), string.lower(text)) or not ply:IsBot() 
-    and (string.StartWith(string.lower(tostring(ply:SteamID())), string.lower(text)) 
-    or string.StartWith(string.lower(tostring(ply:SteamID64())), string.lower(text)))
+    return string.StartWith(string.lower(ply:Nick()), string.lower(text)) 
+    or not ply:IsBot() and (string.StartWith(string.lower(tostring(ply:SteamID())), string.lower(text)) 
+    or string.StartWith(string.lower(tostring(ply:SteamID64())), string.lower(text))) 
 end
 
 function ply:retrieveInventoryAsAdmin()

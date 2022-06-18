@@ -1,9 +1,9 @@
 finventoryConfig = {}
 
 // The language of the addon ['en', 'fr']
-finventoryConfig.lang = 'fr'
+finventoryConfig.lang = 'en'
 // The currency
-finventoryConfig.currency = '€'
+finventoryConfig.currency = '$'
 // The model of the vendor
 finventoryConfig.model = "models/Humans/Group01/male_02.mdl"
 // The base pocket place
@@ -49,18 +49,13 @@ finventoryConfig.shipmentCanBeTaken = true
 finventoryConfig.acceptedEntities = {
     edit_fog = true,
     edit_sky = true,
-    edit_sun = true,
-    ent_batch = true,
-    ent_meth_crystal = true,
-    ent_hazmat = true,
-    ent_glassware = true,
-    ent_iodine = true,
-    ent_meth_container = true,
+    money_printer = true,
+    edit_sun = true
 }
 
 // The list of entities that are illegal
 finventoryConfig.illegalEntities = {
-    ent_batch = true
+    money_printer = true
 }
 
 // If the name doesn't display well in the inventory, you can put custom name via class of the item
@@ -170,40 +165,6 @@ finventoryConfig.saveFolderName = "finventory"
 
 
 finventoryConfig.Language = {}
-finventoryConfig.Language.fr = {
-    noMorePlace = "Il n'y a plus de place !",
-    takeItemSuccess = "Vous avez pris un item !",
-    dropItemFail = "Vous ne pouvez pas déposer ceci !",
-    dropItemSuccess = "Vous avez déposé un item !",
-    pickupBoxSuccess = "Vous avez pris une boite !",
-    pickupBackpackSuccess = "Vous avez pris un sac à dos !",
-    pickupBackpackFailTooMuchItem = "Déposez vos affaires !",
-    pickupBackpackFailAlreadyBack = "Déposez votre sac à dos !",
-    dropBackpackSuccess = "Vous avez déposé votre sac à dos !",
-    buyBackpackSuccessDRP = "Vous avez acheté un nouveau sac à dos pour %d" .. finventoryConfig.currency .. " !",
-    buyBackpackSuccess = "Vous avez acheté un nouveau sac à dos !",
-    notEnoughMoney = "Vous n'avez pas assez d'argent !",
-    tooFarFromPerson = "Vous êtes trop loin de la personne !",
-    notAllowed = "Vous n'êtes pas autorisé à faire ça !",
-    removedItemInspector = "Vous avez retiré %d items illégaux !",
-    removedItemInspectorMoney = "Vous avez retiré %d items illégaux pour %d" .. finventoryConfig.currency .. " !",
-    removedItemSuspect = "On vous a réquisitionné %d items !",
-    inventory = "Inventaire",
-    searchInventory = "Fouillage en cours",
-    dropBackpack = "Déposer le sac",
-    removeIllegalItems = "Enlever les items illégaux",
-    bank = "Banque",
-    bought = "Acheté",
-    buy = "Acheter",
-    vendor = "Vendeur de sac à dos",
-    price = "Prix : ",
-    place = "Place : ",
-    adminPanel = "Panneau d'administration",
-    searchPlayer = " Rechercher un joueur",
-    allInventories = "Tous les inventaires",
-    job = "Métier : ",
-    bag = "Sac : ",
-}
 finventoryConfig.Language.en = {
     noMorePlace = "No more place!",
     takeItemSuccess = "You taken an item!",
@@ -237,6 +198,44 @@ finventoryConfig.Language.en = {
     allInventories = "All inventories",
     job = "Job : ",
     bag = "Bag : ",
+    deleteInventory = "Delete inventory",
+    showInventory = "Show inventory",
+}
+finventoryConfig.Language.fr = {
+    noMorePlace = "Il n'y a plus de place !",
+    takeItemSuccess = "Vous avez pris un item !",
+    dropItemFail = "Vous ne pouvez pas déposer ceci !",
+    dropItemSuccess = "Vous avez déposé un item !",
+    pickupBoxSuccess = "Vous avez pris une boite !",
+    pickupBackpackSuccess = "Vous avez pris un sac à dos !",
+    pickupBackpackFailTooMuchItem = "Déposez vos affaires !",
+    pickupBackpackFailAlreadyBack = "Déposez votre sac à dos !",
+    dropBackpackSuccess = "Vous avez déposé votre sac à dos !",
+    buyBackpackSuccessDRP = "Vous avez acheté un nouveau sac à dos pour %d" .. finventoryConfig.currency .. " !",
+    buyBackpackSuccess = "Vous avez acheté un nouveau sac à dos !",
+    notEnoughMoney = "Vous n'avez pas assez d'argent !",
+    tooFarFromPerson = "Vous êtes trop loin de la personne !",
+    notAllowed = "Vous n'êtes pas autorisé à faire ça !",
+    removedItemInspector = "Vous avez retiré %d items illégaux !",
+    removedItemInspectorMoney = "Vous avez retiré %d items illégaux pour %d" .. finventoryConfig.currency .. " !",
+    removedItemSuspect = "On vous a réquisitionné %d items !",
+    inventory = "Inventaire",
+    searchInventory = "Fouillage en cours",
+    dropBackpack = "Déposer le sac",
+    removeIllegalItems = "Enlever les items illégaux",
+    bank = "Banque",
+    bought = "Acheté",
+    buy = "Acheter",
+    vendor = "Vendeur de sac à dos",
+    price = "Prix : ",
+    place = "Place : ",
+    adminPanel = "Panneau d'administration",
+    searchPlayer = " Rechercher un joueur",
+    allInventories = "Tous les inventaires",
+    job = "Métier : ",
+    bag = "Sac : ",
+    deleteInventory = "Supprimer l'inventaire",
+    showInventory = "Voir l'inventaire",
 }
 
 function loadLanguage() 

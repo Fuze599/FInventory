@@ -198,6 +198,8 @@ function ply:spawnItem(item)
     end
 
     spawnedItem:SetPos(traceLine.HitPos)
+    spawnedItem:SetOwner(self)
+    -- spawnedItem:Setowning_ent(self)
     spawnedItem:Spawn()
 end
 

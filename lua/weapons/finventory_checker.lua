@@ -29,7 +29,7 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
- 
+
 function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)
 end 

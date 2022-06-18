@@ -1,5 +1,7 @@
 if not SERVER then return end
 
+resource.AddWorkshop( "2822621090" )
+
 function fillItemTable(inventoryContent)
     local itemTable = {}
     for k, v in pairs(inventoryContent) do
