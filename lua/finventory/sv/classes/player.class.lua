@@ -19,8 +19,6 @@ util.AddNetworkString("finventoryDeleteInventory")
 local ply = FindMetaTable("Player")
 
 function ply:retrieveInventoryFromFile()
-    if not IsValid(self) then return end
-
     local inventoryPath = "finventory_" .. self:SteamID64() .. ".json"
     local baseFileValue = {uniqueName = "", content = {}}
     local fileContent = retrieveFileContent(inventoryPath, baseFileValue)
@@ -34,8 +32,6 @@ function ply:retrieveInventoryFromFile()
 end
 
 function ply:retrieveBankFromFile()
-    if not IsValid(self) then return end
-
     local bankPath = "finventory_bank_" .. self:SteamID64() .. ".json"
     local baseFileValue = {}
     local fileContent = retrieveFileContent(bankPath, baseFileValue)
@@ -44,8 +40,6 @@ function ply:retrieveBankFromFile()
 end
 
 function ply:retrieveInventory()
-    if not IsValid(self) then return end
-
     if finventoryConfig.devMode then
         return self:retrieveInventoryFromFile()
     else
@@ -54,7 +48,6 @@ function ply:retrieveInventory()
 end
 
 function ply:retrieveBank()
-    if not IsValid(self) then return end
     if finventoryConfig.devMode then
         return self:retrieveBankFromFile()
     else
@@ -76,7 +69,6 @@ function retrieveFileContent(storagePath, baseFileValue)
 end
 
 function ply:sendNotification(msg) 
-    if not IsValid(self) then return end
     net.Start("finventorySendNotification") 
     net.WriteEntity(self)
     net.WriteString(msg)
@@ -84,7 +76,6 @@ function ply:sendNotification(msg)
 end
 
 function ply:pickupItem(itemEntity)
-    if not IsValid(self) then return end
     local inventory = self:retrieveInventory()
 
     local item = createItem(itemEntity)
@@ -141,7 +132,6 @@ function getWeaponName(class)
 end
 
 function ply:dropItem(index) 
-    if not IsValid(self) then return end
     local inventory = self:retrieveInventory()
 
     local removedItem = inventory:remove(index)
@@ -160,7 +150,7 @@ net.Receive("finventoryDropItem", function(len, ply)
 end)
 
 function ply:spawnItem(item)
-    if not IsValid(self) or not item then return end
+    if not item then return end
 
     local traceLine = util.TraceLine({
         start = self:EyePos(),
@@ -204,7 +194,7 @@ function ply:spawnItem(item)
 end
 
 function ply:pickupBackpack(backpack)
-    if not IsValid(self) or not backpack then return end
+    if not backpack then return end
 
     local formerInventory = self:retrieveInventory()
     if not formerInventory:getIsPocket() then 
@@ -233,7 +223,6 @@ function ply:pickupBackpack(backpack)
 end 
 
 function ply:loadModel() 
-    if not IsValid(self) then return end
     local inventory = self:retrieveInventory()
     net.Start("finventoryUpdateCSModel")
     net.WriteEntity(self)
@@ -242,7 +231,7 @@ function ply:loadModel()
 end
 
 function ply:deleteInventory(eraser)
-    if not IsValid(self) or not IsValid(eraser) then return end
+    if not IsValid(eraser) then return end
     if not eraser:IsAdmin() then return end
     local inventory = self:retrieveInventory()
  
@@ -258,7 +247,6 @@ net.Receive("finventoryDeleteInventory", function(len, eraser)
 end)
 
 function ply:dropInventory(hasNotification)
-    if not IsValid(self) then return end
     local inventory = self:retrieveInventory()
 
     if inventory:getIsPocket() then
@@ -280,8 +268,6 @@ net.Receive("finventoryDropInventory", function(len, ply)
 end)
 
 function ply:spawnBackpack(inventory)
-    if not IsValid(self) then return end
-
     local traceLine = util.TraceLine({
         start = self:EyePos(),
         endpos = self:EyePos() + self:EyeAngles():Forward() * 60,
@@ -297,8 +283,6 @@ function ply:spawnBackpack(inventory)
 end
 
 function ply:transferItemFromBankToInventory(indexBank, indexInventory)
-    if not IsValid(self) then return end
-
     local inventory = self:retrieveInventory()
     local bank = self:retrieveBank()
 
@@ -420,7 +404,7 @@ function checkPlayerInspectionValid(inspectorPlayer, inspectedPlayer)
 end
 
 function ply:showInventoryOf(ply)
-    if not IsValid(ply) or not IsValid(self) then return end
+    if not IsValid(ply) then return end
     local inventory = ply:retrieveInventory()
     net.Start("finventoryGetInventoryDerma")
     net.WriteTable(inventory)
@@ -429,7 +413,7 @@ function ply:showInventoryOf(ply)
 end
 
 function ply:showInventoryAsAdmin(ply)
-    if not IsValid(ply) or not IsValid(self) or not self:IsAdmin() then return end
+    if not IsValid(ply) or not self:IsAdmin() then return end
     local inventory = ply:retrieveInventory()
 
     net.Start("finventoryShowInventoryAsAdminRet")

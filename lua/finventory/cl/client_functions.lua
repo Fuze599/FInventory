@@ -3,7 +3,6 @@ if not CLIENT then return end
 local ply = FindMetaTable("Player")
 
 function ply:showNotification(msg)
-    if not self:IsValid() then return end
     notification.AddLegacy(msg, NOTIFY_GENERIC, 3)
     surface.PlaySound("buttons/button15.wav")
     Msg(msg .. "\n") 
@@ -15,7 +14,6 @@ net.Receive('finventorySendNotification', function(len)
 end)
 
 function ply:updateCSmodel(inventory)
-    if not IsValid(self) then return end
     if not inventory.isPocket then
         self.finventoryCSModel = ClientsideModel(inventory.model)
         self.finventoryCSModel:SetNoDraw(true)
