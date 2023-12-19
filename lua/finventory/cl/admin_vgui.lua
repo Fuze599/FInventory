@@ -15,11 +15,9 @@ function showAdminVgui()
     backgroundFrame.DoClick = function(self) backgroundFrame:Remove() end
     backgroundFrame.DoRightClick = function(self) backgroundFrame:Remove() end
 
-    function backgroundFrame:Think()
-        net.Receive('finventoryCloseDerma', function()
-            backgroundFrame:Remove()
-        end)	
-    end
+    net.Receive('finventoryCloseDerma', function()
+        backgroundFrame:Remove()
+    end)	
 
     local mainFrame = vgui.Create('DFrame', backgroundFrame)
     mainFrame:SetSize(scrw * 1152 / 1920, scrh * 594 / 1080)
@@ -215,12 +213,10 @@ function ply:showProfile(mainFrame, backgroundFrame, scrollerInfoFrame, gridInfo
 
     self:retrieveInventoryAsAdmin()
     
-    function dlabelPlayerName:Think()
-        net.Receive("finventoryShowInventoryAsAdminRet", function(len) 
-            local configTable = net.ReadTable()
-            showInventoryCases(configTable, gridItemsInventory, scrollerInfoFrame)
-        end)
-    end
+    net.Receive("finventoryShowInventoryAsAdminRet", function(len) 
+        local configTable = net.ReadTable()
+        showInventoryCases(configTable, gridItemsInventory, scrollerInfoFrame)
+    end)
 end
 
 function showInventoryCases(configTable, gridItemsInventory, scrollerInfoFrame)       

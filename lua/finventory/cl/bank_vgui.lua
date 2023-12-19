@@ -14,11 +14,9 @@ function showBankDerma(inventory, bank)
     backgroundCloseButton.DoClick = function(self) backgroundCloseButton:Remove() end
     backgroundCloseButton.DoRightClick = function(self) backgroundCloseButton:Remove() end
 
-    function backgroundCloseButton:Think()
-        net.Receive('finventoryCloseDerma', function()
-            backgroundCloseButton:Remove()
-        end)	
-    end
+    net.Receive('finventoryCloseDerma', function()
+        backgroundCloseButton:Remove()
+    end)	
 
     local mainFrame = vgui.Create('DFrame', backgroundCloseButton)
     mainFrame:SetSize(scrw * 1152 / 1920, scrh * 594 / 1080)

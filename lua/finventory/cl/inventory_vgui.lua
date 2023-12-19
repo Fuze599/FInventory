@@ -40,11 +40,9 @@ function showInventoryDerma(inventory, inspectedPlayer)
         end
     end
 
-    function backgroundCloseButton:Think()
-        net.Receive('finventoryCloseDerma', function()
-            quitInventory()
-        end)	
-    end
+    net.Receive('finventoryCloseDerma', function()
+        quitInventory()
+    end)	
 
     local mainFrame = vgui.Create('DFrame', backgroundCloseButton)
     mainFrame:SetSize(scrw * 960 / 1920, scrh * 572.4 / 1080)
