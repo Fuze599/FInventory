@@ -88,7 +88,7 @@ end
 
 function Inventory:save()
     if not IsValid(self.owner) then return false end
-    if finventoryConfig.enhancedSaving then
+    if finventoryConfig.devMode then
         self:saveInFile()
     else
         self.owner.finventoryInventory = self

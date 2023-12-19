@@ -34,7 +34,7 @@ finventoryConfig.maxInventorySize = 4095
 // If the item transfer from the bank to the inventory (or vice versa) should generate a sound
 finventoryConfig.soundOnTransfer = true
 // If each access to an inventory should require a reading of the json file
-finventoryConfig.enhancedSaving = true
+finventoryConfig.devMode = true
 // If a player can take any weapon in his inventory (if the player should only take the designated 
 // weapons, set it to false and add the classes of it in the accepted entities)
 finventoryConfig.weaponsCanBeTaken = true

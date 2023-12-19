@@ -46,7 +46,7 @@ end
 function ply:retrieveInventory()
     if not IsValid(self) then return end
 
-    if finventoryConfig.enhancedSaving then
+    if finventoryConfig.devMode then
         return self:retrieveInventoryFromFile()
     else
         return self.finventoryInventory
@@ -55,7 +55,7 @@ end
 
 function ply:retrieveBank()
     if not IsValid(self) then return end
-    if finventoryConfig.enhancedSaving then
+    if finventoryConfig.devMode then
         return self:retrieveBankFromFile()
     else
         return self.finventoryBank

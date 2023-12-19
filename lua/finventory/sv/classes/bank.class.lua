@@ -41,7 +41,7 @@ end
 
 function Bank:save()
     if not IsValid(self:getOwner()) then return false end
-    if finventoryConfig.enhancedSaving then
+    if finventoryConfig.devMode then
         self:saveInFile()
     else
         self.owner.finventoryBank = self

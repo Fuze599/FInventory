@@ -47,7 +47,7 @@ hook.Add("PlayerDisconnected", "finventorySavingBackpackOnDisconnect", function(
         local inventory = ply:retrieveInventory()
         inventory:dropBackpack() 
         inventory:saveInFile()
-    elseif not finventoryConfig.enhancedSaving then
+    elseif not finventoryConfig.devMode then
         local inventory = ply:retrieveInventory()
         inventory:saveInFile() 
     end
