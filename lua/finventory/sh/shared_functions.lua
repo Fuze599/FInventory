@@ -13,7 +13,7 @@ if finventoryConfig.automaticF4Items and finventoryConfig.isGamemodeDarkRP then
             })
         end
     end
-    hook.Add("loadCustomDarkRPItems", "darkRPModifyBackpackF4", darkRPAddItemsF4)
+    hook.Add("loadCustomDarkRPItems", "finventoryDarkRPModifyBackpackF4", darkRPAddItemsF4)
 end
 
 function getInventoryPropertiesByUniqueName(uniqueName) 

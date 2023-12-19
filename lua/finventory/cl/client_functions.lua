@@ -35,7 +35,7 @@ net.Receive('finventoryUpdateCSModel', function(len)
     ply:updateCSmodel(inventory)
 end)
 
-hook.Add("PostPlayerDraw" , "drawBackpackPlayer" , function(ply)
+hook.Add("PostPlayerDraw" , "finventoryDrawBackpackPlayer" , function(ply)
     if ply.finventoryCSModel then
         local boneid = ply:LookupBone("ValveBiped.Bip01_Spine2")
         if not boneid then return end
@@ -69,7 +69,7 @@ function ply:showCheckerLoadBar(otherPly, isInspector)
         hPos = ScrH() * 500 / 1080
     end
     
-    hook.Add("HUDPaint", "LoadBarHUD", function() end)
+    hook.Remove("HUDPaint", "finventoryLoadBarHUD")
     timer.Create("FInventoryCheckerProgressBar", 1 / interval, finventoryConfig.timeToCheckInventory * interval, function()
         local repsLeft = timer.RepsLeft("FInventoryCheckerProgressBar")
         if repsLeft > 0 then
@@ -77,19 +77,19 @@ function ply:showCheckerLoadBar(otherPly, isInspector)
                 or (not isInspector and otherPly:GetEyeTrace().Entity ~= self)
                 or (self:GetPos():Distance(otherPly:GetPos()) > finventoryConfig.distanceChecker) then
 
-                hook.Add("HUDPaint", "LoadBarHUD", function() end)
+                hook.Remove("HUDPaint", "finventoryLoadBarHUD")
                 timer.Remove("FInventoryCheckerProgressBar") 
                 return 
             end
             progressIndex = repsLeft / finventoryConfig.timeToCheckInventory / interval
-            hook.Add("HUDPaint", "LoadBarHUD", function() 
+            hook.Add("HUDPaint", "finventoryLoadBarHUD", function() 
                 draw.RoundedBox(0, ScrW() / 2 - w / 2 - 5, ScrH() / 2 - hPos - 5, w + 10, h + 10, finventoryConfig.Theme.middleColor) --> border
                 draw.RoundedBox(0, ScrW() / 2 - w / 2, ScrH() / 2 - hPos, w, h, finventoryConfig.Theme.veryLightColor) --> background
                 draw.RoundedBox(0, ScrW() / 2 - w / 2 + 3, ScrH() / 2 - hPos + 3, w * progressIndex - 6, h - 6, finventoryConfig.Theme.loadBarColor) --> bar
                 draw.DrawText(text, "FInventorySmallBoldFont", ScrW() / 2 - w / 2 + 10, ScrH() / 2 - hPos + 10, color_white, TEXT_ALIGN_LEFT)
             end)
         else
-            hook.Add("HUDPaint", "LoadBarHUD", function() end)
+            hook.Remove("HUDPaint", "finventoryLoadBarHUD")
         end
     end)
 end

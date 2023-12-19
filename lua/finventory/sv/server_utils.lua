@@ -11,7 +11,7 @@ function fillItemTable(inventoryContent)
 end
 
 // HOOKS
-hook.Add("PlayerInitialSpawn", "ReloadInventoryOnSpawn", function(ply)
+hook.Add("PlayerInitialSpawn", "finventoryReloadInventoryOnSpawn", function(ply)
     timer.Create("InitialSpawnLoadAttributes", 3, 1, function()
         local inventory = ply:retrieveInventoryFromFile()
         local bank = ply:retrieveBankFromFile()
@@ -21,7 +21,7 @@ hook.Add("PlayerInitialSpawn", "ReloadInventoryOnSpawn", function(ply)
     end)
 end)
 
-hook.Add("playerBoughtCustomEntity", "dropCustomBackpackEntity", function(ply, tab, ent)
+hook.Add("playerBoughtCustomEntity", "finventoryDropCustomBackpackEntity", function(ply, tab, ent)
     if ent:GetClass() == 'finventory_base_backpack' then
         ent:SetModel(tab.model)
         ent:PhysicsInit(SOLID_VPHYSICS)
@@ -36,13 +36,13 @@ hook.Add("playerBoughtCustomEntity", "dropCustomBackpackEntity", function(ply, t
 end)   
 
 if finventoryConfig.dropOnDeath then
-    hook.Add("PlayerDeath", "DropOnDeath", function(ply)
+    hook.Add("PlayerDeath", "finventoryDropOnDeath", function(ply)
         ply:dropInventory(false)
         ply:loadModel()
     end)
 end
 
-hook.Add("PlayerDisconnected", "SavingBackpackOnDisconnect", function(ply)
+hook.Add("PlayerDisconnected", "finventorySavingBackpackOnDisconnect", function(ply)
     if finventoryConfig.deleteInventoryOnDisconnect then
         local inventory = ply:retrieveInventory()
         inventory:dropBackpack() 
