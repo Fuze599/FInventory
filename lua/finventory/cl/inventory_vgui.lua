@@ -160,7 +160,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
 
     local decalingIndex = {}
     for i = 1, inventory.place do
-        decalingIndex[i] = 0;
+        decalingIndex[i] = 0
         local isOccuped = false
         local modelItem = ""
         local text = ""
