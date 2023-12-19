@@ -1,8 +1,11 @@
 if not CLIENT then return end
 
+local scrw = ScrW()
+local scrh = ScrH()
+
 function showBankDerma(inventory, bank)     
     local backgroundCloseButton = vgui.Create('DButton')
-    backgroundCloseButton:SetSize(ScrW(), ScrH())
+    backgroundCloseButton:SetSize(scrw, scrh)
     backgroundCloseButton:SetCursor("arrow")
     backgroundCloseButton:SetText("")
     backgroundCloseButton.Paint = function(self,w,h)
@@ -18,7 +21,7 @@ function showBankDerma(inventory, bank)
     end
 
     local mainFrame = vgui.Create('DFrame', backgroundCloseButton)
-    mainFrame:SetSize(ScrW() * 1152 / 1920, ScrH() * 594 / 1080)
+    mainFrame:SetSize(scrw * 1152 / 1920, scrh * 594 / 1080)
     mainFrame:SetTitle('')
     mainFrame:Center()
     mainFrame:SetVisible(true)
@@ -31,15 +34,15 @@ function showBankDerma(inventory, bank)
     end
 
     local upperBar = vgui.Create("DPanel", mainFrame)
-    upperBar:SetSize(ScrW() * 1152 / 1920, ScrH() * 40 / 1080) 
+    upperBar:SetSize(scrw * 1152 / 1920, scrh * 40 / 1080) 
     upperBar:SetPos(0, 0)
     upperBar.Paint = function(self, w, h)
         draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end
 
     local closeButton = vgui.Create("DButton", mainFrame)
-    closeButton:SetPos(ScrW() * 1120 / 1920, ScrH() * 10 / 1080)
-    closeButton:SetSize(ScrW() * 20 / 1920, ScrH() * 20 / 1080)
+    closeButton:SetPos(scrw * 1120 / 1920, scrh * 10 / 1080)
+    closeButton:SetSize(scrw * 20 / 1920, scrh * 20 / 1080)
     closeButton:SetFont("FInventorySmallFont")
     closeButton:SetText("")
     closeButton:SetCursor("hand")
@@ -49,20 +52,20 @@ function showBankDerma(inventory, bank)
     closeButton.DoClick = function() backgroundCloseButton:Remove() end
 
     local mainTitle = vgui.Create("DLabel", mainFrame)
-    mainTitle:SetPos(ScrW() * 15 / 1920, ScrH() * -6 / 1080)
-    mainTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
+    mainTitle:SetPos(scrw * 15 / 1920, scrh * -6 / 1080)
+    mainTitle:SetSize(scrw * 480 / 1920, scrh * 50 / 1080)
     mainTitle:SetFont("FInventoryLargeFont")
     mainTitle:SetText(finventoryConfig.Language.bank)
 
     local youTitle = vgui.Create("DLabel", mainFrame)
-    youTitle:SetPos(ScrW() * 75 / 1920, ScrH() * 35 / 1080)
-    youTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
+    youTitle:SetPos(scrw * 75 / 1920, scrh * 35 / 1080)
+    youTitle:SetSize(scrw * 480 / 1920, scrh * 50 / 1080)
     youTitle:SetFont("FInventorySmallFont")
     youTitle:SetText(finventoryConfig.Language.inventory)
 
     local bankTitle = vgui.Create("DLabel", mainFrame)
-    bankTitle:SetPos(ScrW() * 600 / 1920, ScrH() * 35 / 1080)
-    bankTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
+    bankTitle:SetPos(scrw * 600 / 1920, scrh * 35 / 1080)
+    bankTitle:SetSize(scrw * 480 / 1920, scrh * 50 / 1080)
     bankTitle:SetFont("FInventorySmallFont")
     bankTitle:SetText(finventoryConfig.Language.bank)
 
@@ -70,20 +73,20 @@ function showBankDerma(inventory, bank)
     local inventoryButtons = {}
     for i = 1, 2 do 
         local isBank = i == 2
-        local wPosScroller = ScrW() * 70 / 1920
+        local wPosScroller = scrw * 70 / 1920
         local actualInventory = inventory.content
         local otherInventory = bank.content
         local nbPlaceInventory = inventory.place
         if isBank then
-            wPosScroller = ScrW() * 600 / 1920
+            wPosScroller = scrw * 600 / 1920
             actualInventory = bank.content
             otherInventory = inventory.content
             nbPlaceInventory = finventoryConfig.bankPlace
         end
 
-        local hPosScroller = ScrH() * 75 / 1080
-        local wSizeScroller = ScrW() * 515 / 1920
-        local hSizeScroller = ScrH() * 499 / 1080
+        local hPosScroller = scrh * 75 / 1080
+        local wSizeScroller = scrw * 515 / 1920
+        local hSizeScroller = scrh * 499 / 1080
         local gridItems, scroller = getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
 
         for j = 1, nbPlaceInventory do

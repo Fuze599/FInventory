@@ -1,6 +1,8 @@
 if not CLIENT then return end
 
 local ply = FindMetaTable("Player")
+local scrw = ScrW()
+local scrh = ScrH()
 
 function ply:showNotification(msg)
     notification.AddLegacy(msg, NOTIFY_GENERIC, 3)
@@ -58,13 +60,13 @@ end)
 function ply:showCheckerLoadBar(otherPly, isInspector)
     local progressIndex = 1
     local interval = finventoryConfig.loadingBarInterval
-    local w = ScrW() * 300 / 1920
-    local h = ScrH() * 40 / 1080
-    local hPos = ScrH() * 20 / 1080
+    local w = scrw * 300 / 1920
+    local h = scrh * 40 / 1080
+    local hPos = scrh * 20 / 1080
     local text = "Search in progress"
     if not isInspector then 
         text = "You get searched!"
-        hPos = ScrH() * 500 / 1080
+        hPos = scrh * 500 / 1080
     end
     
     hook.Remove("HUDPaint", "finventoryLoadBarHUD")
@@ -81,10 +83,10 @@ function ply:showCheckerLoadBar(otherPly, isInspector)
             end
             progressIndex = repsLeft / finventoryConfig.timeToCheckInventory / interval
             hook.Add("HUDPaint", "finventoryLoadBarHUD", function() 
-                draw.RoundedBox(0, ScrW() / 2 - w / 2 - 5, ScrH() / 2 - hPos - 5, w + 10, h + 10, finventoryConfig.Theme.middleColor) --> border
-                draw.RoundedBox(0, ScrW() / 2 - w / 2, ScrH() / 2 - hPos, w, h, finventoryConfig.Theme.veryLightColor) --> background
-                draw.RoundedBox(0, ScrW() / 2 - w / 2 + 3, ScrH() / 2 - hPos + 3, w * progressIndex - 6, h - 6, finventoryConfig.Theme.loadBarColor) --> bar
-                draw.DrawText(text, "FInventorySmallBoldFont", ScrW() / 2 - w / 2 + 10, ScrH() / 2 - hPos + 10, color_white, TEXT_ALIGN_LEFT)
+                draw.RoundedBox(0, scrw / 2 - w / 2 - 5, scrh / 2 - hPos - 5, w + 10, h + 10, finventoryConfig.Theme.middleColor) --> border
+                draw.RoundedBox(0, scrw / 2 - w / 2, scrh / 2 - hPos, w, h, finventoryConfig.Theme.veryLightColor) --> background
+                draw.RoundedBox(0, scrw / 2 - w / 2 + 3, scrh / 2 - hPos + 3, w * progressIndex - 6, h - 6, finventoryConfig.Theme.loadBarColor) --> bar
+                draw.DrawText(text, "FInventorySmallBoldFont", scrw / 2 - w / 2 + 10, scrh / 2 - hPos + 10, color_white, TEXT_ALIGN_LEFT)
             end)
         else
             hook.Remove("HUDPaint", "finventoryLoadBarHUD")

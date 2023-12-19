@@ -1,5 +1,8 @@
 if not CLIENT then return end
 
+local scrw = ScrW()
+local scrh = ScrH()
+
 function showInventoryDerma(inventory, inspectedPlayer)
     local checkMod = (inspectedPlayer and inspectedPlayer ~= LocalPlayer() 
                         and inspectedPlayer:IsPlayer() and LocalPlayer():isCP())
@@ -17,7 +20,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
 
     local backgroundCloseButton = vgui.Create('DButton')
-    backgroundCloseButton:SetSize(ScrW(), ScrH())
+    backgroundCloseButton:SetSize(scrw, scrh)
     backgroundCloseButton:SetCursor("arrow")
     backgroundCloseButton:SetText("")
     backgroundCloseButton.Paint = function(self, w, h)
@@ -44,7 +47,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
 
     local mainFrame = vgui.Create('DFrame', backgroundCloseButton)
-    mainFrame:SetSize(ScrW() * 960 / 1920, ScrH() * 572.4 / 1080)
+    mainFrame:SetSize(scrw * 960 / 1920, scrh * 572.4 / 1080)
     mainFrame:SetTitle("")
     mainFrame:Center()
     mainFrame:SetVisible(true)
@@ -56,15 +59,15 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
 
     local upperBar = vgui.Create("DPanel", mainFrame)
-    upperBar:SetSize(ScrW() * 960 / 1920, ScrH() * 40 / 1080) 
+    upperBar:SetSize(scrw * 960 / 1920, scrh * 40 / 1080) 
     upperBar:SetPos(0, 0)
     upperBar.Paint = function(self, w, h)
         draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.lightColor)
     end 
 
     local closeButton = vgui.Create("DButton", mainFrame)
-    closeButton:SetPos(ScrW() * 925 / 1920, ScrH() * 10 / 1080)
-    closeButton:SetSize(ScrW() * 20 / 1920, ScrH() * 20 / 1080)
+    closeButton:SetPos(scrw * 925 / 1920, scrh * 10 / 1080)
+    closeButton:SetSize(scrw * 20 / 1920, scrh * 20 / 1080)
     closeButton:SetFont("FInventorySmallFont")
     closeButton:SetText("")
     closeButton.Paint = function(self,w,h)
@@ -78,16 +81,16 @@ function showInventoryDerma(inventory, inspectedPlayer)
     end
 
     local mainTitle = vgui.Create("DLabel", mainFrame)
-    mainTitle:SetPos(ScrW() * 15 / 1920, ScrH() * -6 / 1080)
-    mainTitle:SetSize(ScrW() * 480 / 1920, ScrH() * 50 / 1080)
+    mainTitle:SetPos(scrw * 15 / 1920, scrh * -6 / 1080)
+    mainTitle:SetSize(scrw * 480 / 1920, scrh * 50 / 1080)
     mainTitle:SetFont("FInventoryLargeFont")
     mainTitle:SetText(title)
 
     if checkMod and finventoryConfig.timePoliceControl > 0 then
         local progressIndex = 1
         local dProgressTimeLeft = vgui.Create("DPanel", mainFrame)
-        dProgressTimeLeft:SetSize(ScrW() * 965 / 1920, ScrH() * 10 / 1080)
-        dProgressTimeLeft:SetPos(0, ScrH() * 565 / 1080)
+        dProgressTimeLeft:SetSize(scrw * 965 / 1920, scrh * 10 / 1080)
+        dProgressTimeLeft:SetPos(0, scrh * 565 / 1080)
         dProgressTimeLeft.Paint = function(self, w, h)
             draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
             draw.RoundedBoxEx(0, 0, 0, w * progressIndex, h, finventoryConfig.Theme.loadBarColor)
@@ -103,13 +106,13 @@ function showInventoryDerma(inventory, inspectedPlayer)
 
     local modelPanel = vgui.Create("DModelPanel", mainFrame)
     if inventory.isPocket then
-        modelPanel:SetPos(ScrW() * -50 / 1920, ScrH() * 54 / 1080)
+        modelPanel:SetPos(scrw * -50 / 1920, scrh * 54 / 1080)
         modelPanel:SetModel(inspectedPlayer:GetModel())
     else
-        modelPanel:SetPos(ScrW() * -50 / 1920, ScrH() * 30 / 1080)
+        modelPanel:SetPos(scrw * -50 / 1920, scrh * 30 / 1080)
         modelPanel:SetModel(inventory.modelExt)
     end
-    modelPanel:SetSize(ScrW() * 500 / 1920, ScrH() * 500 / 1080)
+    modelPanel:SetSize(scrw * 500 / 1920, scrh * 500 / 1080)
     modelPanel:SetCursor("arrow")
     modelPanel.LayoutEntity = function(self)
         local size1, size2 = self.Entity:GetRenderBounds()
@@ -125,8 +128,8 @@ function showInventoryDerma(inventory, inspectedPlayer)
         if hasIllegalItem then buttonName = finventoryConfig.Language.removeIllegalItems end
 
         local dropBackpackButton = vgui.Create("DButton", mainFrame)
-        dropBackpackButton:SetPos(ScrW() * 100 / 1920, ScrH() * 490 / 1080)
-        dropBackpackButton:SetSize(ScrW() * 230 / 1920, ScrH() * 50 / 1080)
+        dropBackpackButton:SetPos(scrw * 100 / 1920, scrh * 490 / 1080)
+        dropBackpackButton:SetSize(scrw * 230 / 1920, scrh * 50 / 1080)
         dropBackpackButton:SetFont("FInventorySmallFont")
         dropBackpackButton:SetText("")
         dropBackpackButton:SetCursor("hand")
@@ -148,14 +151,14 @@ function showInventoryDerma(inventory, inspectedPlayer)
             else
                 draw.RoundedBox(15, 0, 0, w, h, finventoryConfig.Theme.lightColor)
             end
-            draw.DrawText(buttonName, "FInventorySmallFont", ScrW() * 114 / 1920, ScrH() * 15 / 1080, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
+            draw.DrawText(buttonName, "FInventorySmallFont", scrw * 114 / 1920, scrh * 15 / 1080, finventoryConfig.Theme.veryMuchLightColor, TEXT_ALIGN_CENTER)
         end
     end
 
-    local wPosScroller = ScrW() * 425.7 / 1920
-    local hPosScroller = ScrH() * 95 / 1920
-    local wSizeScroller = ScrH() * 525 / 1080
-    local hSizeScroller = ScrH() * 499 / 1080
+    local wPosScroller = scrw * 425.7 / 1920
+    local hPosScroller = scrh * 95 / 1920
+    local wSizeScroller = scrh * 525 / 1080
+    local hSizeScroller = scrh * 499 / 1080
     local gridItems = getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
 
     local decalingIndex = {}

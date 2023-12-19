@@ -1,5 +1,8 @@
 if not CLIENT then return end
 
+local scrw = ScrW()
+local scrh = ScrH()
+
 function getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSizeScroller)
     local scroller = vgui.Create("DScrollPanel", mainFrame)
     scroller:SetSize(wSizeScroller, hSizeScroller)
@@ -16,8 +19,8 @@ function getScroller(mainFrame, wPosScroller, hPosScroller, wSizeScroller, hSize
     local gridItems = vgui.Create("DGrid", scroller)
     gridItems:SetPos(0, 0)
     gridItems:SetCols(3)
-    gridItems:SetColWide(ScrW() * 166.66 / 1920)
-    gridItems:SetRowHeight(ScrH() * 166.66 / 1080)
+    gridItems:SetColWide(scrw * 166.66 / 1920)
+    gridItems:SetRowHeight(scrh * 166.66 / 1080)
 
     return gridItems, scroller
 end
@@ -55,7 +58,7 @@ function getGrid(gridItems, actualInventory, inventoryIndex)
     end
 
     local listItem = vgui.Create("DPanel")
-    listItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080) 
+    listItem:SetSize(scrw * 159.2 / 1920, scrh * 159.2 / 1080) 
     listItem.Paint = function(self, w, h)
         surface.SetDrawColor(55, 55, 55, 255)
         surface.DrawTexturedRect(0, 0, w, h)
@@ -63,14 +66,14 @@ function getGrid(gridItems, actualInventory, inventoryIndex)
 
     local buttonBackgroundItem = vgui.Create("DButton", listItem)
     buttonBackgroundItem:SetPos(0, 0)
-    buttonBackgroundItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
+    buttonBackgroundItem:SetSize(scrw * 159.2 / 1920, scrh * 159.2 / 1080)
     buttonBackgroundItem:SetText("")
     buttonBackgroundItem.text = nameItem
     buttonBackgroundItem.index = inventoryIndex
 
     local modelItemPanel = vgui.Create("DModelPanel", buttonBackgroundItem)
-    modelItemPanel:SetSize(ScrW() * 120.3 / 1920, ScrH() * 120.2 / 1080)
-    modelItemPanel:SetPos(ScrW() * 20 / 1920, 0)
+    modelItemPanel:SetSize(scrw * 120.3 / 1920, scrh * 120.2 / 1080)
+    modelItemPanel:SetPos(scrw * 20 / 1920, 0)
     modelItemPanel:SetModel(modelItem)
     modelItemPanel.LayoutEntity = function(self)
         local size1, size2 = self.Entity:GetRenderBounds()
@@ -81,7 +84,7 @@ function getGrid(gridItems, actualInventory, inventoryIndex)
     end	
     local buttonItem = vgui.Create("DButton", buttonBackgroundItem)
     buttonItem:SetPos(0, 0)
-    buttonItem:SetSize(ScrW() * 159.2 / 1920, ScrH() * 159.2 / 1080)
+    buttonItem:SetSize(scrw * 159.2 / 1920, scrh * 159.2 / 1080)
     buttonItem:SetText("")
     buttonItem.Paint = function(self, w, h) 
         draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.backgroundColor)
