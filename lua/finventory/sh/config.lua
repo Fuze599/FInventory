@@ -23,7 +23,7 @@ finventoryConfig.timePoliceControl = 5
 // The time to open another player's inventory 
 finventoryConfig.timeToCheckInventory = 2
 // If you want to enable darkrp features (money, cp verification for the inventory checker, etc)
-finventoryConfig.isGamemodeDarkRP = true
+finventoryConfig.isGamemodeDarkRP = false
 // If you want to make backpack in the F4 menu automatically based 
 // on the backpacks config (else there is some notes at the end of the config)
 finventoryConfig.automaticF4Items = true
@@ -34,7 +34,7 @@ finventoryConfig.maxInventorySize = 4095
 // If the item transfer from the bank to the inventory (or vice versa) should generate a sound
 finventoryConfig.soundOnTransfer = true
 // If each access to an inventory should require a reading of the json file
-finventoryConfig.devMode = true
+finventoryConfig.devMode = false
 // If a player can take any weapon in his inventory (if the player should only take the designated 
 // weapons, set it to false and add the classes of it in the accepted entities)
 finventoryConfig.weaponsCanBeTaken = true
