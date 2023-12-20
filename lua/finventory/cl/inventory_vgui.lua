@@ -91,7 +91,7 @@ function showInventoryDerma(inventory, inspectedPlayer)
         dProgressTimeLeft:SetPos(0, scrh * 565 / 1080)
         dProgressTimeLeft.Paint = function(self, w, h)
             draw.RoundedBox(0, 0, 0, w, h, finventoryConfig.Theme.veryLightColor)
-            draw.RoundedBoxEx(0, 0, 0, w * progressIndex, h, finventoryConfig.Theme.loadBarColor)
+            draw.RoundedBox(0, 0, 0, w * progressIndex, h, finventoryConfig.Theme.loadBarColor)
         end 
 
         local interval = finventoryConfig.loadingBarInterval
