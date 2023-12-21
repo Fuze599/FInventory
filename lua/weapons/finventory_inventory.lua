@@ -41,12 +41,7 @@ end
 
 function SWEP:PrimaryAttack()
     if not SERVER then return end
-    local eyeTrace = self:GetOwner():GetEyeTrace()
-    local entity = eyeTrace.Entity
-
-    if self:GetOwner():GetPos():DistToSqr(eyeTrace.HitPos) > finventoryConfig.distancePickupItems then return end
-
-    self:GetOwner():pickupItem(entity) 
+    self:GetOwner():pickupTargetedItem() 
 end 
 
 function SWEP:SecondaryAttack()  

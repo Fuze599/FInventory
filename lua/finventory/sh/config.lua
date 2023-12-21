@@ -6,6 +6,14 @@ finventoryConfig.lang = 'en'
 finventoryConfig.currency = '$'
 // The model of the vendor
 finventoryConfig.model = "models/Humans/Group01/male_02.mdl"
+// If you want to allow the use of command.
+finventoryConfig.allowCommand = true
+// The command to open the inventory
+finventoryConfig.openInventoryCommand = "/inventory"
+// The order to pick up an item.
+finventoryConfig.pickupItemCommand = "/pickup"
+// The command to inspect a player.
+finventoryConfig.inspectPlayerCommand = "/inspect"
 // The base pocket place
 finventoryConfig.basePlace = 3
 // If the content of your pocket or you bag is dropped when you die
@@ -23,7 +31,7 @@ finventoryConfig.timePoliceControl = 5
 // The time to open another player's inventory 
 finventoryConfig.timeToCheckInventory = 2
 // If you want to enable darkrp features (money, cp verification for the inventory checker, etc)
-finventoryConfig.isGamemodeDarkRP = false
+finventoryConfig.isGamemodeDarkRP = true
 // If you want to make backpack in the F4 menu automatically based 
 // on the backpacks config (else there is some notes at the end of the config)
 finventoryConfig.automaticF4Items = true

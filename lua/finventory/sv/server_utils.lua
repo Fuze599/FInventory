@@ -52,3 +52,18 @@ hook.Add("PlayerDisconnected", "finventorySavingBackpackOnDisconnect", function(
         inventory:saveInFile() 
     end
 end)
+
+if finventoryConfig.allowCommand then
+    hook.Add("PlayerSay", "finventoryOpenInventory", function(ply, text)
+        if string.lower(text) == finventoryConfig.openInventoryCommand then
+            ply:showInventoryOf(ply)
+            return ""
+        elseif string.lower(text) == finventoryConfig.pickupItemCommand then
+            ply:pickupTargetedItem() 
+            return ""
+        elseif string.lower(text) == finventoryConfig.inspectPlayerCommand then
+            ply:inspectTargetedPlayer()
+            return ""
+        end
+    end)
+end

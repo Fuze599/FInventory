@@ -5,7 +5,7 @@ local scrh = ScrH()
 
 function showInventoryDerma(inventory, inspectedPlayer)
     local checkMod = (inspectedPlayer and inspectedPlayer ~= LocalPlayer() 
-                        and inspectedPlayer:IsPlayer() and LocalPlayer():isCP())
+                      and inspectedPlayer:IsPlayer() and (not finventoryConfig.isGamemodeDarkRP or LocalPlayer():isCP()))
 
     if not inspectedPlayer or not inspectedPlayer:IsPlayer() then inspectedPlayer = LocalPlayer() end                
 

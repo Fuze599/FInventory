@@ -75,7 +75,11 @@ function ply:sendNotification(msg)
     net.Send(self)
 end
 
-function ply:pickupItem(itemEntity)
+function ply:pickupTargetedItem()
+    local eyeTrace = self:GetEyeTrace()
+    local itemEntity = eyeTrace.Entity
+    if self:GetPos():DistToSqr(eyeTrace.HitPos) > finventoryConfig.distancePickupItems then return end
+
     local inventory = self:retrieveInventory()
 
     local item = createItem(itemEntity)
@@ -340,6 +344,36 @@ net.Receive("finventoryBuyInventory", function(len, ply)
     local inventoryUniqueName = net.ReadString()
     ply:buyInventory(inventoryUniqueName) 
 end)
+
+function ply:inspectTargetedPlayer()
+    local eyeTrace = self:GetEyeTrace()
+    local inspectedPlayer = eyeTrace.Entity
+
+    if self:GetPos():Distance(inspectedPlayer:GetPos()) < finventoryConfig.distanceChecker 
+        and inspectedPlayer:IsPlayer() then
+
+        self:showLoadingBar(inspectedPlayer, true)
+        inspectedPlayer:showLoadingBar(self, false)
+
+        local interval = finventoryConfig.loadingBarInterval
+        timer.Create("removeInventoryCheckerPanel", 1 / interval, finventoryConfig.timeToCheckInventory * interval, function()
+            local repsLeft = timer.RepsLeft("removeInventoryCheckerPanel")
+
+            if self:GetEyeTrace().Entity ~= inspectedPlayer or not inspectedPlayer:IsPlayer()
+                or self:GetPos():Distance(eyeTrace.HitPos) > finventoryConfig.distanceChecker then 
+                timer.Remove("removeInventoryCheckerPanel") 
+                return
+            end 
+
+            if repsLeft <= 0 then
+                if self:changeInspectionMode(inspectedPlayer, true) then
+                    inspectedPlayer:closeAllDermas()
+                    self:showInventoryOf(inspectedPlayer)
+                end
+            end 
+        end)
+    end
+end
 
 function ply:changeInspectionMode(inspectedPlayer, activated)
     if not checkPlayerInspectionValid(self, inspectedPlayer) then return end
