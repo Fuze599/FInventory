@@ -31,11 +31,11 @@ end
 *******************/
 
 function Item:isAccepted()
-	return finventoryConfig.acceptedEntities[self:getClass()] 
-		   or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
-		   or (finventoryConfig.foodCanBeTaken and self:isFood())
-		   or (finventoryConfig.ammoCanBeTaken and self:isAmmo())
-		   or (finventoryConfig.shipmentCanBeTaken and self:isShipment())
+	return finventoryConfig.acceptedEntities[self:getClass()]
+		or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
+		or (finventoryConfig.foodCanBeTaken and self:isFood())
+		or (finventoryConfig.ammoCanBeTaken and self:isAmmo())
+		or (finventoryConfig.shipmentCanBeTaken and self:isShipment())
 end
 
 function Item:isShipment()

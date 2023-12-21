@@ -50,7 +50,8 @@ finventoryConfig.acceptedEntities = {
     edit_fog = true,
     edit_sky = true,
     money_printer = true,
-    edit_sun = true
+    edit_sun = true,
+    weapon_357 = true
 }
 
 // The list of entities that are illegal
@@ -60,7 +61,8 @@ finventoryConfig.illegalEntities = {
 
 // If the name doesn't display well in the inventory, you can put custom name via class of the item
 finventoryConfig.customItemsName = {
-    fas2_ak47 = "AK 47"
+    fas2_ak47 = "AK 47",
+    weapon_357 = "357 magnum"
 }
 
 --[[-- HOW TO CREATE A BACKPACK --
@@ -149,7 +151,7 @@ finventoryConfig.distanceChecker = 130
 // The distance to show 3D2D
 finventoryConfig.distance3D2D = 300000
 // The distance to pickup items
-finventoryConfig.distancePickupItems = 3000
+finventoryConfig.distancePickupItems = 10000
 // DONT CHANGE / calculates the number of bytes for net messages based on the maximum inventory size
 finventoryConfig.maxUIntByte = math.ceil(math.log(finventoryConfig.maxInventorySize + 1, 2))
 // The entity class of spawned weapon
