@@ -1,6 +1,6 @@
 finventoryConfig = {}
 
-// The language of the addon ['en', 'fr']
+// The language of the addon ['en', 'fr', 'tr']
 finventoryConfig.lang = 'en'
 // The currency
 finventoryConfig.currency = '$'
@@ -211,7 +211,8 @@ finventoryConfig.Language.en = {
     deleteInventory = "Delete inventory",
     showInventory = "Show inventory",
 }
-    finventoryConfig.Language.tr = {
+
+finventoryConfig.Language.tr = {
     noMorePlace = "Yeriniz yok!",
     takeItemSuccess = "Bir eşya aldınız!",
     dropItemFail = "Bunu bırakamazsınız!",
@@ -246,7 +247,8 @@ finventoryConfig.Language.en = {
     bag = "Çanta : ",
     deleteInventory = "Envanteri temizle",
     showInventory = "Envanteri göster",
-                                                            }
+}
+
 finventoryConfig.Language.fr = {
     noMorePlace = "Il n'y a plus de place !",
     takeItemSuccess = "Vous avez pris un item !",
