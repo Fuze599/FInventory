@@ -31,7 +31,7 @@ finventoryConfig.timePoliceControl = 5
 // The time to open another player's inventory 
 finventoryConfig.timeToCheckInventory = 2
 // If you want to enable darkrp features (money, cp verification for the inventory checker, etc)
-finventoryConfig.isGamemodeDarkRP = true
+finventoryConfig.isGamemodeDarkRP = false 
 // If you want to make backpack in the F4 menu automatically based 
 // on the backpacks config (else there is some notes at the end of the config)
 finventoryConfig.automaticF4Items = true
