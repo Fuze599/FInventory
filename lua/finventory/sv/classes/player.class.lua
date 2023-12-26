@@ -205,29 +205,6 @@ function ply:spawnItem(item)
     spawnedItem:Spawn()
 end
 
--- Create a prop
-local prop = ents.Create("prop_physics")
-
--- Check if the entity was created successfully
-if IsValid(prop) then
-    -- Set the model for the prop (replace "models/props_c17/oildrum001.mdl" with the desired model path)
-    prop:SetModel("models/props_c17/oildrum001.mdl")
-
-    -- Set the position for the prop
-    prop:SetPos(Vector(0, 0, 50))
-
-    -- Set additional properties if needed
-    -- prop:SetColor(Color(255, 255, 255, 255)) 
-
-    -- Spawn the prop in the game world
-    prop:Spawn()
-
-    print("Prop created successfully!")
-else
-    print("Failed to create prop!")
-end
-
-
 function ply:pickupBackpack(backpack)
     if not backpack then return end
 
