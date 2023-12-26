@@ -32,6 +32,7 @@ end
 
 function Item:isAccepted()
 	return finventoryConfig.acceptedEntities[self:getClass()]
+		or (finventoryConfig.allowProps and self:isProp())
 		or (finventoryConfig.weaponsCanBeTaken and self:isWeapon())
 		or (finventoryConfig.foodCanBeTaken and self:isFood())
 		or (finventoryConfig.ammoCanBeTaken and self:isAmmo())
@@ -40,6 +41,10 @@ end
 
 function Item:isShipment()
 	return self.itemType == getItemShipmentString()
+end
+
+function Item:isProp()
+	return self.class == getItemPropString()
 end
 
 function Item:isEntity()

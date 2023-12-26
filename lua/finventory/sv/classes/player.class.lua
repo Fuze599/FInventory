@@ -163,39 +163,70 @@ function ply:spawnItem(item)
     })
 
     local spawnedItem
-    if item:isEntity() then
+    if item:isProp() then
         spawnedItem = ents.Create(item:getClass())
         if not IsValid(spawnedItem) then return end
+        spawnedItem:SetModel(item:getModel())
+    elseif item:isEntity() then
+        spawnedItem = ents.Create(item:getClass())
+        if not IsValid(spawnedItem) then return end
+        spawnedItem:SetOwner(self)
     elseif item:isWeapon() then 
         spawnedItem = ents.Create(finventoryConfig.spawnedWeaponClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem:SetWeaponClass(item:getClass())
         spawnedItem:SetModel(item:getModel())
         spawnedItem:Setamount(item:getCount())
+        spawnedItem:SetOwner(self)
     elseif item:isShipment() then
         spawnedItem = ents.Create(finventoryConfig.spawnedShipmentClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem:Setcount(item:getCount())
         spawnedItem:Setcontents(item:getContent())
+        spawnedItem:SetOwner(self)
     elseif item:isAmmo() then
         spawnedItem = ents.Create(finventoryConfig.spawnedAmmoClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem.amountGiven = item:getCount()
         spawnedItem.ammoType = item:getContent()
         spawnedItem:SetModel(item:getModel())
+        spawnedItem:SetOwner(self)
     elseif item:isFood() then
         spawnedItem = ents.Create(finventoryConfig.spawnedFoodClass)
         if not IsValid(spawnedItem) then return end
         spawnedItem.foodItem = item:getContent()
         spawnedItem.FoodEnergy = spawnedItem.foodItem.energy
         spawnedItem:SetModel(item:getModel())
+        spawnedItem:SetOwner(self)
     end
 
     spawnedItem:SetPos(traceLine.HitPos)
-    spawnedItem:SetOwner(self)
     -- spawnedItem:Setowning_ent(self)
     spawnedItem:Spawn()
 end
+
+-- Create a prop
+local prop = ents.Create("prop_physics")
+
+-- Check if the entity was created successfully
+if IsValid(prop) then
+    -- Set the model for the prop (replace "models/props_c17/oildrum001.mdl" with the desired model path)
+    prop:SetModel("models/props_c17/oildrum001.mdl")
+
+    -- Set the position for the prop
+    prop:SetPos(Vector(0, 0, 50))
+
+    -- Set additional properties if needed
+    -- prop:SetColor(Color(255, 255, 255, 255)) 
+
+    -- Spawn the prop in the game world
+    prop:Spawn()
+
+    print("Prop created successfully!")
+else
+    print("Failed to create prop!")
+end
+
 
 function ply:pickupBackpack(backpack)
     if not backpack then return end

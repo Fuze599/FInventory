@@ -8,6 +8,8 @@ finventoryConfig.currency = '$'
 finventoryConfig.model = "models/Humans/Group01/male_02.mdl"
 // If you want to allow the use of command.
 finventoryConfig.allowCommand = true
+// If you allow props to be taken into inventory.
+finventoryConfig.allowProps = true
 // The command to open the inventory
 finventoryConfig.openInventoryCommand = "/inventory"
 // The order to pick up an item.
@@ -42,7 +44,7 @@ finventoryConfig.maxInventorySize = 4095
 // If the item transfer from the bank to the inventory (or vice versa) should generate a sound
 finventoryConfig.soundOnTransfer = true
 // If each access to an inventory should require a reading of the json file
-finventoryConfig.devMode = false
+finventoryConfig.devMode = true
 // If a player can take any weapon in his inventory (if the player should only take the designated 
 // weapons, set it to false and add the classes of it in the accepted entities)
 finventoryConfig.weaponsCanBeTaken = true

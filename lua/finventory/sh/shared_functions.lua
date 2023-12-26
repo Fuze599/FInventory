@@ -46,3 +46,7 @@ end
 function getItemFoodString()
 	return "food"
 end
+
+function getItemPropString()
+	return "prop_physics"
+end
