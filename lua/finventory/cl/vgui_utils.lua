@@ -73,7 +73,11 @@ function getGrid(gridItems, actualInventory, inventoryIndex)
 
     local modelItemPanel = vgui.Create("DModelPanel", buttonBackgroundItem)
     modelItemPanel:SetSize(scrw * 120.3 / 1920, scrh * 120.2 / 1080)
-    modelItemPanel:SetPos(scrw * 20 / 1920, 0)
+    if nameItem == "" then
+        modelItemPanel:SetPos(scrw * 20 / 1920, scrh * 20 / 1080)
+    else
+        modelItemPanel:SetPos(scrw * 20 / 1920, 0)
+    end
     modelItemPanel:SetModel(modelItem)
     modelItemPanel.LayoutEntity = function(self)
         local size1, size2 = self.Entity:GetRenderBounds()
