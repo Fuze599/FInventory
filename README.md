@@ -76,6 +76,7 @@ Once you have downloaded the addon, you are ready to now install and configure i
 - Show backpacks in spawn menu instead of vendor.
 - An in-game configuration menu.
 - Make sure you have items that take up more than one place in the inventory.
+- An option to remove the whitelist.
 
 # Help and support
 
