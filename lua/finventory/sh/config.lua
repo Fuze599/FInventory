@@ -41,6 +41,8 @@ finventoryConfig.automaticF4Items = true
 finventoryConfig.maxBackpackPurchase = 10
 // The max size of any inventory
 finventoryConfig.maxInventorySize = 4095
+// The time between each save in JSON files in order to prevent data lost in case of crash (0 to deactivate)
+finventoryConfig.saveTime = 300
 // If the item transfer from the bank to the inventory (or vice versa) should generate a sound
 finventoryConfig.soundOnTransfer = true
 // If each access to an inventory should require a reading of the json file

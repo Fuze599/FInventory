@@ -10,6 +10,16 @@ function fillItemTable(inventoryContent)
     return itemTable
 end
 
+function saveInventories()
+    for i, ply in ipairs(player.GetAll()) do
+        local plyInventory = ply:retrieveInventory()
+        local plyBank = ply:retrieveBank()
+        if plyInventory != nil then plyInventory:saveInFile() end
+        if plyBank != nil then plyBank:saveInFile() end
+    end
+end
+if finventoryConfig.saveTime != 0 then timer.Create("finventorySaveInventories", finventoryConfig.saveTime, 0, saveInventories) end
+
 // HOOKS
 hook.Add("PlayerInitialSpawn", "finventoryReloadInventoryOnSpawn", function(ply)
     timer.Create("InitialSpawnLoadAttributes", 3, 1, function()
@@ -17,7 +27,9 @@ hook.Add("PlayerInitialSpawn", "finventoryReloadInventoryOnSpawn", function(ply)
         local bank = ply:retrieveBankFromFile()
         ply.finventoryInventory = inventory
         ply.finventoryBank = bank
-        ply:loadModel()
+        for i, otherPlayer in ipairs(player.GetAll()) do
+            otherPlayer:loadModel()
+        end
     end)
 end)
 
