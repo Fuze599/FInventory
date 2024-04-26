@@ -255,7 +255,9 @@ function ply:deleteInventory(eraser)
 end
 net.Receive("finventoryDeleteInventory", function(len, eraser) 
     local ply = net.ReadEntity()
-    ply:deleteInventory(eraser) 
+    if IsValid(ply) then
+        ply:deleteInventory(eraser)
+    end
 end)
 
 function ply:dropInventory(hasNotification)

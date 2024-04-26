@@ -12,7 +12,9 @@ end
 net.Receive('finventorySendNotification', function(len) 
     local ply = net.ReadEntity()
     local msg = net.ReadString()
-    ply:showNotification(msg) 
+    if IsValid(ply) then
+        ply:showNotification(msg) 
+    end
 end)
 
 function ply:updateCSmodel(inventory)
@@ -32,7 +34,9 @@ end
 net.Receive('finventoryUpdateCSModel', function(len) 
     local ply = net.ReadEntity()
     local inventory = net.ReadTable()
-    ply:updateCSmodel(inventory)
+    if IsValid(ply) then
+        ply:updateCSmodel(inventory)
+    end
 end)
 
 hook.Add("PostPlayerDraw" , "finventoryDrawBackpackPlayer" , function(ply)
@@ -97,7 +101,9 @@ net.Receive('finventoryShowLoadBar', function(len)
     local ply = LocalPlayer()
     local otherPly = net.ReadEntity()
     local isInspector = net.ReadBool()
-    ply:showCheckerLoadBar(otherPly, isInspector) 
+    if IsValid(ply) and IsValid(otherPly) then
+        ply:showCheckerLoadBar(otherPly, isInspector)
+    end
 end)
 
 /*
